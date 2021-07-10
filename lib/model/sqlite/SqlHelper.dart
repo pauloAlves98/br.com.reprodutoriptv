@@ -1,6 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+//realizar leitura de arquivo txt.
 //import 'SQLUtil.dart';
 
 class SqlHelper {

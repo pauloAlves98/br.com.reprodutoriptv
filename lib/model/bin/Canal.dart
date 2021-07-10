@@ -6,7 +6,7 @@ class Canal {
   String? _linkLogo;
   String? _linkVideo;
   String? _status;
-  Lista? _lista;//CANAL PERTENECE A UMA LISTA SÓ MAIS UMA LISTA PODE ESTAR EM VARIOS CANAIS
+  Lista? _lista;//CANAL PERTENECE A UMA LISTA SÓ MAIS UMA LISTA 
   
   get getId => this.id;
   set setId( id) => this.id = id;
