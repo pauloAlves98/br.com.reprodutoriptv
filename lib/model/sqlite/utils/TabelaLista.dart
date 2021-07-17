@@ -17,7 +17,7 @@ class TabelaLista{
    "$COL_LINK TEXT, "+
    "$COL_DATAMODIFICACAO TEXT, "+
    "$COL_STATUS TEXT, "+
-   "$COL_CLIENTE INTEGER, "+ 
+   "$COL_CLIENTE INTEGER NOT NULL, "+ 
    "FOREIGN KEY($COL_CLIENTE) REFERENCES "+ TabelaCliente.NOME_TABELA+"("+TabelaUsuario.COL_ID+"));";
 
 }

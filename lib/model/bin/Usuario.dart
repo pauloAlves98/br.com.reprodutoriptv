@@ -9,7 +9,9 @@ abstract class Usuario{
   String _status = "ATIVO";
   String _urlFoto = "";
   
-  Usuario(this._id, this._nome, this._codigo, this._login, this._senha);
+ 
+
+  //Usuario(this._id, this._nome, this._codigo, this._login, this._senha);
   
   get getUrlFoto => this._urlFoto;
   set setUrlFoto(String urlFoto) => this._urlFoto = urlFoto;

@@ -16,7 +16,7 @@ class TabelaCanal{
    "$COL_LINKLOGO TEXT, "+
    "$COL_LINKVIDEO TEXT, "+
    "$COL_STATUS TEXT, "+
-   "$COL_LISTA INTEGER, "+ 
+   "$COL_LISTA INTEGER NOT NULL, "+ 
    "FOREIGN KEY($COL_LISTA) REFERENCES "+ TabelaLista.NOME_TABELA+"("+TabelaLista.COL_ID+"));";
 
 }

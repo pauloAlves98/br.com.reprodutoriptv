@@ -10,7 +10,7 @@ class TabelaCliente{
   static const createTable = "CREATE TABLE $NOME_TABELA ( "+
   TabelaUsuario.COL_ID + " INTEGER PRIMARY KEY, "+
   TabelaUsuario.COL_NOME + " TEXT, "+
-  TabelaUsuario.COL_CODIGO + " TEXT, "+
+  TabelaUsuario.COL_CODIGO + " TEXT UNIQUE, "+
   TabelaUsuario.COL_LOGIN + " TEXT, "+
   TabelaUsuario.COL_SENHA + " TEXT, "+
   TabelaUsuario.COL_STATUS +  " TEXT, "+
