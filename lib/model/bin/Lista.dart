@@ -63,13 +63,13 @@ class Lista {
   set status(String? value) => this._status = value;
   //metodos de conversão
 
-  Future<List<dynamic>?> carregaLista() async {//extrai linhas do arquivo da lista
+ static Future<List<dynamic>?> carregaLista(String caminho) async {//extrai linhas do arquivo da lista
     List lista = [];
     List listaAux = [];
     bool extinf = false; //verifica se eh extinf
     String temp = "";
     try {
-      File file = new File(this.link);
+      File file = new File(caminho);
       listaAux = await file.readAsLines();
       listaAux.forEach((line) {
         if (line.trim().length > 0 &&
@@ -99,7 +99,7 @@ class Lista {
   Future insert() async {
     Database dataBase = await SqlHelper().db;
     int valor = await dataBase.insert(TabelaLista.NOME_TABELA, toMap());
-    print(valor);
+    print("Lista $nome ID: "+ valor.toString());
     return valor;
   }
 }

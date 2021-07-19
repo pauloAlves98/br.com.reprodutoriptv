@@ -1,6 +1,8 @@
 import 'TabelaCanal.dart';
 import 'TabelaCategoria.dart';
 
+
+//nao usar
 class TabelaCategoriaXcanal{
   static const String NOME_TABELA = "categoriaxcanal";
   static const String COL_ID = "id";

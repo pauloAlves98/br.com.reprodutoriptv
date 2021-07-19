@@ -20,7 +20,7 @@ class _SGBDPageState extends State<SGBDPage> {
           return SqfliteManager(
               database: snapshot.data,
               enable: true,
-              child: MyApp(),
+              child: MyApp.getInstance(),
           );
         } else {
           return Container(

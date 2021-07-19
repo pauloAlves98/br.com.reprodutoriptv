@@ -6,6 +6,11 @@ class TabelaCategoria{
 
   static const createTable = "CREATE TABLE $NOME_TABELA ( "+
    "$COL_ID INTEGER PRIMARY KEY, "+
-   "$COL_NOME TEXT, "+
+   "$COL_NOME TEXT UNIQUE, "+
    "$COL_STATUS TEXT);";
+
+
+  static String getAllPorNome(String nome) {
+    return "SELECT * FROM $NOME_TABELA where $COL_NOME='$nome'";
+  }
 }

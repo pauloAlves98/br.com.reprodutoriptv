@@ -34,7 +34,7 @@ class SqlHelper {
     print("Caminho Db "+ path.toString());
     databasecaminho = path;
     return await openDatabase(path,
-        version: 2, onCreate: create, onUpgrade: update);
+        version: 1, onCreate: create, onUpgrade: update);
   }
 
   void create(Database db, int newVersion) async {
@@ -44,7 +44,7 @@ class SqlHelper {
     await db.execute(TabelaCliente.createTable);
     await db.execute(TabelaCategoria.createTable);
     await db.execute(TabelaCanal.createTable);
-    await db.execute(TabelaCategoriaXcanal.createTable);
+    //await db.execute(TabelaCategoriaXcanal.createTable);
     //  await db.execute(TabelaFicha.createTable);
     //  await db.execute(TabelaPagamento.createTable);
     //  await db.execute(TabelaDebito.createTable);

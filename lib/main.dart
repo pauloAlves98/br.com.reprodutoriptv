@@ -4,14 +4,18 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:iptv/model/bin/Cliente.dart';
+import 'package:iptv/view/HomePage.dart';
 import 'package:yoyo_player/yoyo_player.dart';
 
 
 import 'SGBDPage.dart';
 import 'model/bin/Administrador.dart';
+import 'model/bin/Canal.dart';
+import 'model/bin/Categoria.dart';
 import 'model/bin/Lista.dart';
 
 String SGBDPAGE = "/SGBDPAGE";
+String HOMEPAGE = "/HOMEPAGE";
 void main() {
   runApp(
     MaterialApp(
@@ -21,14 +25,23 @@ void main() {
       ),
       debugShowCheckedModeBanner: false,
       routes: {
-        "/": (_) => MyApp(),
+        "/": (_) => HomePage.getInstance(),
         SGBDPAGE: (_) => SGBDPage(),
+        HOMEPAGE:(_) => HomePage.getInstance(),
       },
     ),
   );
 }
 
 class MyApp extends StatefulWidget {
+
+  static MyApp _instance;//Singleton
+  MyApp._internal();
+  static MyApp getInstance(){
+     if(_instance==null)
+        _instance =  MyApp._internal();
+      return _instance;
+  }
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -74,19 +87,15 @@ class _MyAppState extends State<MyApp> {
                           print("Add cliente");
                           try{
                               //Navigator.pushNamed(context, SGBDPAGE);
-                          Cliente c = new Cliente(null,"Jose","111111","login","senha");
-                          for(int i=2;i<11;i++){
-
-                            Administrador adm = new Administrador(null,"Jose",i.toString()+"90","login","senha");
-                            adm.id = await adm.insert();
-                          }
-          
-                        
-                          // if(adm.id!=0){
-                          //   c.adm = adm.id;
-                          //   c.insert();
-                          // }else
-                          //   print("falhou");
+                          Cliente c = new Cliente(null,"Jose","111113","login","senha");
+                          Administrador adm = new Administrador(null,"Jose ADM","9990","login","senha");
+                         
+                          adm.id = await adm.insert();
+                          if(adm.id!=0){
+                             c.adm = adm.id;
+                             c.insert();
+                          }else
+                            print("falhou");
 
                           }catch(ex){
                             print("Exception "+ex.toString());
@@ -136,7 +145,7 @@ class _MyAppState extends State<MyApp> {
                                 Lista listac = new Lista.simples("Lista 1",caminho);
                                 listac.idcliente = 1;
                                 listac.datamodificacao = "17-07-2021";
-                                _lista = await listac.carregaLista();
+                                _lista = await Lista.carregaLista(PATH);
                                  int i = 0;
                                  print(_lista);
                                  for(i=0;i<_lista.length;i++){
@@ -145,12 +154,28 @@ class _MyAppState extends State<MyApp> {
                                     print("Link: "+_lista[i][1]);
                                    }
                                   }
-                                  // listac.id = await listac.insert();
-                                  //print("ID Lista: "+ listac.id.toString());
+                                  listac.id = await listac.insert();
+                                 // print("ID Lista: "+ listac.id.toString());
 
                                   //categoria.
+                                  List<Categoria> categorias = await Categoria.carregaCategoria(_lista);
+                                  print("TAmaho "+categorias.length.toString());
+                                  List<dynamic> iall  = await Categoria.insertAll(categorias);//lista de id
+                                  print("I All ");
+                                  print(iall.length);
+                                  print("ACAABOUUUUUUUUU");
 
-                                  //canais
+                                  
+                                  //canais - probelma eh aqui
+                                  List<Canal> canais = await Canal.carregaCanais(_lista);
+                                  print("Canais: ");
+                                  print(canais.length);
+                                  for(Canal element in canais){
+                                    print(element.linkVideo);
+                                         element.idlista = listac.id;
+                                         await element.insert();
+                                  }
+                                  print("Acabou tudo: ");
 
                             } else
                               caminho = "NOT";
