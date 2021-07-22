@@ -1,6 +1,8 @@
 //@dart=2.9
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iptv/model/utils/Cores.dart';
+import 'package:iptv/view/ListaPage.dart';
 
 class HomePage extends StatefulWidget {
   static HomePage _instance; //Singleton
@@ -26,14 +28,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      appBar: AppBar(
+      appBar: HomePage.cIndex!=0?AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomCenter,
-              colors: [Color(0xFF041840), Color(0xFF041830)],
-            ),
+            gradient: GRADIENTE_CABECARIO,
           ),
         ),
         title: Padding(
@@ -63,7 +61,7 @@ class _HomePageState extends State<HomePage> {
             }
         ),
         ],
-      ),
+      ):null,
 
 
       bottomNavigationBar: BottomNavigationBar(//mecher aqui e dpois fazer as paginas, começar por cadastro de conta.
@@ -109,6 +107,7 @@ class _HomePageState extends State<HomePage> {
             ),
     
           ),
+          child: retornoPagina(HomePage.cIndex),
         ),
     );
   }
@@ -119,5 +118,12 @@ class _HomePageState extends State<HomePage> {
       HomePage.cIndex = indice;
       print("Atual " + "$indice");
     });
+  }
+    Widget retornoPagina(index){
+      if(index==0){
+        return ListaPage.getInstance();
+      }
+     
+
   }
 }

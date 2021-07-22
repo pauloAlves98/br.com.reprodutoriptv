@@ -6,7 +6,7 @@ class TabelaCategoria{
 
   static const createTable = "CREATE TABLE $NOME_TABELA ( "+
    "$COL_ID INTEGER PRIMARY KEY, "+
-   "$COL_NOME TEXT UNIQUE, "+
+   "$COL_NOME TEXT, "+
    "$COL_STATUS TEXT);";
 
 
