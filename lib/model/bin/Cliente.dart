@@ -43,6 +43,7 @@ class Cliente extends Usuario{
     this.login = login;
     this.senha = senha;
   }
+  Cliente.internal();
     
   
   //Cliente();

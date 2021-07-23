@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iptv/model/utils/Cores.dart';
 import 'package:iptv/view/ListaPage.dart';
 
+import 'ContaPage.dart';
+
 class HomePage extends StatefulWidget {
   static HomePage _instance; //Singleton
   static int cIndex = 0;
@@ -122,6 +124,9 @@ class _HomePageState extends State<HomePage> {
     Widget retornoPagina(index){
       if(index==0){
         return ListaPage.getInstance();
+      }
+      else if(index==2){
+        return ContaPage.getInstance();
       }
      
 

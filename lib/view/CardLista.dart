@@ -39,58 +39,9 @@ Widget builderCardLista(int index, BuildContext context,
                 ],
               ),
             ),
-
             // linha lado a lado
-            Row(
-              children: [
-                Expanded(
-                  child: ListTile(
-                    leading: Icon(Icons.tv, size: 40),
-                    title: Text(
-                      'Canais',
-                      style: GoogleFonts.oswald(color: Colors.white),
-                    ),
-                    subtitle: Text('140',
-                        style: GoogleFonts.roboto(color: Colors.blueGrey[200])),
-                  ),
-                ),
-                Expanded(
-                  child: ListTile(
-                    leading: Icon(Icons.apps, size: 40),
-                    title: Text('Categorias',
-                        style: GoogleFonts.oswald(color: Colors.white)),
-                    subtitle: Text('14',
-                        style: GoogleFonts.roboto(color: Colors.blueGrey[200])),
-                  ),
-                ),
-              ],
-            ),
-
-            Row(
-              children: [
-                Expanded(
-                  child: ListTile(
-                    leading: Icon(Icons.date_range_outlined, size: 40),
-                    title: Text(
-                      'Modificação',
-                      style: GoogleFonts.oswald(color: Colors.white),
-                    ),
-                    subtitle: Text('20-07-2021',
-                        style: GoogleFonts.roboto(color: Colors.blueGrey[200])),
-                  ),
-                ),
-                Expanded(
-                  child: ListTile(
-                    leading: Icon(Icons.verified_outlined, size: 40),
-                    title: Text('Situação',
-                        style: GoogleFonts.oswald(color: Colors.white)),
-                    subtitle: Text('Ativa',
-                        style: GoogleFonts.roboto(color: Colors.blueGrey[200])),
-                  ),
-                ),
-              ],
-            ),
-
+            cardListaItem("Canais", "140", "Categorias", "14"),
+            cardListaItem("Modificação", "20-07-2021", "Situação", "Ativa"),
             //Parte de baixo
             ButtonTheme(
               focusColor: Colors.black,
@@ -129,4 +80,33 @@ Widget builderCardLista(int index, BuildContext context,
       ),
     ),
   );
+}
+
+Widget cardListaItem(String t1,String st1, String t2, String st2){//t1 = title st1 = subtilte
+  return 
+            Row(
+              children: [
+                Expanded(
+                  child: ListTile(
+                    leading: Icon(Icons.date_range_outlined, size: 40),
+                    title: Text(
+                      t1,
+                      style: GoogleFonts.oswald(color: Colors.white),
+                    ),
+                    subtitle: Text(st1,
+                        style: GoogleFonts.roboto(color: AZUL_ALTERNATIVO)),
+                  ),
+                ),
+                Expanded(
+                  child: ListTile(
+                    leading: Icon(Icons.verified_outlined, size: 40),
+                    title: Text(t2,
+                        style: GoogleFonts.oswald(color: Colors.white)),
+                    subtitle: Text(st2,
+                        style: GoogleFonts.roboto(color: AZUL_ALTERNATIVO)),
+                  ),
+                ),
+              ],
+            );
+
 }
