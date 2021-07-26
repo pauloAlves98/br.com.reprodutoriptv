@@ -1,7 +1,8 @@
 //@dart=2.9
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iptv/model/utils/Cores.dart';
+import 'package:iptv/model/utils/Constantes.dart';
+import 'package:iptv/view/CanaisPage.dart';
 import 'package:iptv/view/ListaPage.dart';
 
 import 'ContaPage.dart';
@@ -121,14 +122,15 @@ class _HomePageState extends State<HomePage> {
       print("Atual " + "$indice");
     });
   }
-    Widget retornoPagina(index){
+    Widget retornoPagina(index)  {
       if(index==0){
         return ListaPage.getInstance();
+      }
+      else if(index==1){
+        return CanaisPage();
       }
       else if(index==2){
         return ContaPage.getInstance();
       }
-     
-
   }
 }

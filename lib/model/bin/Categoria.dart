@@ -7,11 +7,13 @@ import 'package:sqflite/sqflite.dart';
 class Categoria {
   int? _id;
   String? _nome;
+  int? _idlista;
   String? _status = "ATIVA";
 
   Categoria();
-  Categoria.simples(String nome){
+  Categoria.simples(String nome, int id_lista){
     this._nome = nome;
+    this._idlista = id_lista;
   }
 
   static const String SEM_CATEGORIA = "SEM_CATEGORIA";
@@ -19,12 +21,14 @@ class Categoria {
   Categoria.fromMapSqLite(Map map) {
     _id = map[TabelaCategoria.COL_ID];
     _nome = map[TabelaCategoria.COL_NOME];
+    _idlista = map[TabelaCategoria.COL_LISTA];
     _status = map[TabelaCategoria.COL_STATUS];
   }
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
       TabelaCategoria.COL_ID: _id,
       TabelaCategoria.COL_NOME: _nome,
+      TabelaCategoria.COL_LISTA: _idlista,
       TabelaCategoria.COL_STATUS: _status
     };
     return map;
@@ -39,7 +43,7 @@ class Categoria {
 
   //extrair categorias
 
-  static Future<List<Categoria>?> carregaCategoria(List <dynamic> lista) async {//lista vinda do metodo carrega lista de Lista.
+  static Future<List<Categoria>?> carregaCategoria(List <dynamic> lista, int idlista) async {//lista vinda do metodo carrega lista de Lista.
     //lançar exceçoe personalizadas
     List<String> auxCategorias = [];
     List<Categoria> categorias = [];
@@ -54,12 +58,12 @@ class Categoria {
           grupo = grupo.length<=0?SEM_CATEGORIA:grupo;
           if (!auxCategorias.contains(grupo)) {//SE A CATEGORIA NAO EXISTIR NA LISTA
             auxCategorias.add(grupo);
-            categorias.add(new Categoria.simples(grupo));
+            categorias.add(new Categoria.simples(grupo,idlista));
           }
         }else{
           if (!auxCategorias.contains(SEM_CATEGORIA)) {//SE A CATEGORIA NAO EXISTIR NA LISTA
               auxCategorias.add(SEM_CATEGORIA);
-              categorias.add(new Categoria.simples(SEM_CATEGORIA));
+              categorias.add(new Categoria.simples(SEM_CATEGORIA, idlista));
           }
         }
       });
@@ -99,4 +103,6 @@ class Categoria {
     }
     return categorias;
   }
+
+
 }

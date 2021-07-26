@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iptv/model/utils/Cores.dart';
+import 'package:iptv/model/utils/Constantes.dart';
 import 'package:iptv/model/utils/Corrente.dart';
 
 class ContaPage extends StatefulWidget {

@@ -1,5 +1,9 @@
+//@dart=2.9
 import 'package:iptv/model/bin/Cliente.dart';
+import 'package:iptv/model/bin/Lista.dart';
 
 class Corrente{
-  static Cliente? clienteCorrente = Cliente(0,"José P. Silva","HAD21S1#","USER@GMAIL.COM","USER123");
+  static Cliente clienteCorrente;
+  static List<Lista> listasCorrente;
+  static Lista listaCorrente;
 }

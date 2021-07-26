@@ -4,7 +4,9 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:iptv/model/bin/Cliente.dart';
+import 'package:iptv/view/CadastroListaPage.dart';
 import 'package:iptv/view/HomePage.dart';
+import 'package:iptv/view/Splash.dart';
 import 'package:yoyo_player/yoyo_player.dart';
 
 
@@ -16,6 +18,8 @@ import 'model/bin/Lista.dart';
 
 String SGBDPAGE = "/SGBDPAGE";
 String HOMEPAGE = "/HOMEPAGE";
+String CADASTROLISTAPAGE = "/CADASTROLISTAPAGE";
+String SPLASHPAGE = "/SPLASH";
 void main() {
   runApp(
     MaterialApp(
@@ -25,9 +29,11 @@ void main() {
       ),
       debugShowCheckedModeBanner: false,
       routes: {
-        "/": (_) => HomePage.getInstance(),
+        "/": (_) => Splash(),
         SGBDPAGE: (_) => SGBDPage(),
         HOMEPAGE:(_) => HomePage.getInstance(),
+        CADASTROLISTAPAGE:(_) => CadastroListaPage(),
+        SPLASHPAGE:(_) => Splash()
       },
     ),
   );
@@ -158,7 +164,7 @@ class _MyAppState extends State<MyApp> {
                                  // print("ID Lista: "+ listac.id.toString());
 
                                   //categoria.
-                                  List<Categoria> categorias = await Categoria.carregaCategoria(_lista);
+                                  List<Categoria> categorias = await Categoria.carregaCategoria(_lista,listac.id);
                                   print("TAmaho "+categorias.length.toString());
                                   List<dynamic> iall  = await Categoria.insertAll(categorias);//lista de id
                                   print("I All ");
@@ -167,7 +173,7 @@ class _MyAppState extends State<MyApp> {
 
                                   
                                   //canais - probelma eh aqui
-                                  List<Canal> canais = await Canal.carregaCanais(_lista);
+                                  List<Canal> canais = await Canal.carregaCanais(_lista,listac.id);
                                   print("Canais: ");
                                   print(canais.length);
                                   for(Canal element in canais){

@@ -1,6 +1,7 @@
 import 'package:iptv/model/bin/Administrador.dart';
 import 'package:iptv/model/bin/Usuario.dart';
 import 'package:iptv/model/sqlite/SqlHelper.dart';
+import 'package:iptv/model/sqlite/utils/Comum.dart';
 import 'package:iptv/model/sqlite/utils/TabelaCliente.dart';
 import 'package:iptv/model/sqlite/utils/TabelaUsuario.dart';
 import 'package:sqflite/sqflite.dart';
@@ -44,6 +45,16 @@ class Cliente extends Usuario{
     this.senha = senha;
   }
   Cliente.internal();
+  Cliente.full(String nome, String codigoh, String login, String senha,String data, int idadm){
+   // this.id = id==0?null:id;
+   
+    this.nome = nome;
+    this.codigo = codigoh;
+    this.login = login;
+    this.senha = senha;
+    this._dataVencimento = data;
+    this._adm = idadm;
+  }
     
   
   //Cliente();
@@ -67,6 +78,21 @@ class Cliente extends Usuario{
        print('Failed to insert: ' + ex.toString());
     }
     return valor;
+  }
+
+    static Future<List<Cliente>> getAll() {
+    return Future<List<Cliente>>.delayed(Duration(seconds: 1), () async {
+      Database dataBase = await SqlHelper().db;
+      List listMap =
+          await dataBase.rawQuery(Comum.getAll(TabelaCliente.NOME_TABELA));
+      List<Cliente> listas = [];
+      for (Map m in listMap) {
+        listas.add(Cliente.fromMapSqLite(m));
+        print(Cliente.fromMapSqLite(m).nome);
+        print(Cliente.fromMapSqLite(m).id.toString());
+      }
+      return listas;
+    });
   }
 
 }

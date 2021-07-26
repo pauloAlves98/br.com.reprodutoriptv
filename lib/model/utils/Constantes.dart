@@ -16,3 +16,10 @@ const LinearGradient GRADIENTE_BODY = LinearGradient(
               colors:[AZUL_LEVE, AZUL_ESCURO],
 );
 
+
+
+class Constantes {
+ static AssetImage USER_ASSET = AssetImage("assets/user.png");
+}
+
+

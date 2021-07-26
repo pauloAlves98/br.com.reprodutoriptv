@@ -23,4 +23,16 @@ class TabelaCanal{
    "FOREIGN KEY($COL_LISTA) REFERENCES "+ TabelaLista.NOME_TABELA+"("+TabelaLista.COL_ID+"), "+
    "FOREIGN KEY($COL_CATEGORIA) REFERENCES "+ TabelaCategoria.NOME_TABELA+"("+TabelaCategoria.COL_ID+"));";
 
+  static String getCountCanaisPorLista(int idlista) {
+    String id = idlista.toString();
+    return "SELECT count($COL_ID) FROM $NOME_TABELA where $COL_LISTA = $id";
+  }
+  static String getCountCategoriasPorLista(int idlista) {
+    String id = idlista.toString();
+    return "SELECT count(DISTINCT $COL_CATEGORIA) FROM $NOME_TABELA where $COL_LISTA = $id";
+  }
+  static String removeAllLista(int idlista) {
+    return "DELETE FROM $NOME_TABELA where $COL_LISTA='$idlista'";
+  }
+
 }

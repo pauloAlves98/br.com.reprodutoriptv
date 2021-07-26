@@ -20,4 +20,9 @@ class TabelaLista{
    "$COL_CLIENTE INTEGER NOT NULL, "+ 
    "FOREIGN KEY($COL_CLIENTE) REFERENCES "+ TabelaCliente.NOME_TABELA+"("+TabelaUsuario.COL_ID+"));";
 
+  static String getAllCliente(int id) {
+   
+    return "SELECT * FROM $NOME_TABELA where $COL_CLIENTE='$id'";
+  }
+
 }

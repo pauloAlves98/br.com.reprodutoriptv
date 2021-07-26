@@ -1,23 +1,30 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:intl/intl.dart';
 import 'package:iptv/model/bin/Cliente.dart';
 import 'package:iptv/model/sqlite/SqlHelper.dart';
+import 'package:iptv/model/sqlite/utils/Comum.dart';
+import 'package:iptv/model/sqlite/utils/TabelaCanal.dart';
+import 'package:iptv/model/sqlite/utils/TabelaCategoria.dart';
 import 'package:iptv/model/sqlite/utils/TabelaLista.dart';
 import 'package:sqflite/sqflite.dart';
+
+import 'Canal.dart';
+import 'Categoria.dart';
 
 class Lista {
   int? _id;
   String? _nome;
   String? _link; //endreco da lista.
   int? _idcliente;
-   //UM CLIENTE PODE CARREGAR MAIS DE UMA LISTA
+  //UM CLIENTE PODE CARREGAR MAIS DE UMA LISTA
   String? _datamodificacao;
   String? _status = "ATIVO";
 
   Lista();
 
-  Lista.simples(String nome, String link){
+  Lista.simples(String nome, String link) {
     this._nome = nome;
     this._link = link;
   }
@@ -46,7 +53,7 @@ class Lista {
   //getter e setter
   int? get idcliente => this._idcliente;
   set idcliente(int? value) => this._idcliente = value;
-  
+
   get id => this._id;
   set id(value) => this._id = value;
 
@@ -63,7 +70,10 @@ class Lista {
   set status(String? value) => this._status = value;
   //metodos de conversão
 
- static Future<List<dynamic>?> carregaLista(String caminho) async {//extrai linhas do arquivo da lista
+  static Future<List<dynamic>?> carregaLista(
+    String caminho,
+  ) async {
+    //extrai linhas do arquivo da lista
     List lista = [];
     List listaAux = [];
     bool extinf = false; //verifica se eh extinf
@@ -88,18 +98,78 @@ class Lista {
         }
       });
     } catch (e) {
-        throw new Exception("Erro ao ler arquivo classe lista : " + e.toString());
+      throw new Exception("Erro ao ler arquivo classe lista : " + e.toString());
     }
 
     //insert lista aqui.
     return lista;
   }
 
+  static Future popularLista(String nome, String caminho, int idcliente) async {
+    Lista listac = new Lista.simples(nome, caminho);
+    listac.idcliente = idcliente;
+    listac.datamodificacao =  DateFormat.yMMMd().format(DateTime.now()).toString();
+    List<Canal>? canais;
+    try {
+      List? lista = await Lista.carregaLista(caminho);
+      listac.id = await listac.insert();
+
+      List<Categoria>? categorias = await Categoria.carregaCategoria(lista!, listac.id);
+      print("TAMANHO CATEGORIA: " + categorias!.length.toString());
+      List<dynamic> iall = await Categoria.insertAll(categorias); //lista de id
+      print("IDS CATEGORIAS");
+      print(iall.length);
+      print("ACAABOUUUUUUUUU CATEGORIA");
+
+      //canais
+      canais = await Canal.carregaCanais(lista, listac.id);
+      print("Canais: ");
+      print(canais!.length);
+
+      print("Popular lista: rodando canais!");
+      for (Canal element in canais) {
+       // print(element.linkVideo);
+        element.idlista = listac.id;
+        await element.insert();
+      }
+      print("Acabou tudo: ");
+    } catch (e) {
+      print("Popular Lista exception " + e.toString());
+      throw Exception("Popular Lista exception: "+e.toString());
+    }
+    return canais;
+  }
+
   //metodos de acesso ao bd.
   Future insert() async {
     Database dataBase = await SqlHelper().db;
     int valor = await dataBase.insert(TabelaLista.NOME_TABELA, toMap());
-    print("Lista $nome ID: "+ valor.toString());
+    print("Lista $nome ID: " + valor.toString());
     return valor;
+  }
+
+  static Future<List<Lista>> getAllCliente(int id) {
+    return Future<List<Lista>>.delayed(Duration(seconds: 1), () async {
+      Database dataBase = await SqlHelper().db;
+      List listMap =
+          await dataBase.rawQuery(TabelaLista.getAllCliente(id));
+      List<Lista> listas = [];
+      for (Map m in listMap) {
+        listas.add(Lista.fromMapSqLite(m));
+        print(Lista.fromMapSqLite(m).nome);
+        print(Lista.fromMapSqLite(m).id.toString());
+      }
+      return listas;
+    });
+  }
+    static Future<List<dynamic>> deleteCascade(int idlist) async {
+    Database dataBase = await SqlHelper().db;
+     return await dataBase.transaction((txn) async {
+        var batch = txn.batch();
+        batch.rawDelete(TabelaCanal.removeAllLista(idlist));
+        batch.rawDelete(TabelaCategoria.removeAllLista(idlist));
+        batch.rawDelete(Comum.removeId(idlist,TabelaLista.NOME_TABELA));
+        return await batch.commit();
+      });
   }
 }

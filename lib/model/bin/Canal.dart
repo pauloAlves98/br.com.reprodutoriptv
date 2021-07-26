@@ -75,7 +75,7 @@ class Canal {
   get status => this._status;
   set status(value) => this._status = value;
 
-  static Future<List<Canal>?> carregaCanais(List<dynamic> lista) async {
+  static Future<List<Canal>?> carregaCanais(List<dynamic> lista, int idlista) async {
     //lista vinda do metodo carrega lista de Lista.
     //lançar exceçoe personalizadas
     List<Canal> canais = [];
@@ -113,10 +113,10 @@ class Canal {
         }
         //consultar categoria;
         List<Categoria> c = await Categoria.getAllPorNome(categoria);
-        if (c.length <= 0) idcategoria = await Categoria.simples(categoria).insert();
+        if (c.length <= 0) idcategoria = await Categoria.simples(categoria, idlista).insert();
         else idcategoria = c[0].id;
         
-         print("Video: "+linkVideo);
+         //print("Video: "+linkVideo);
         canais.add(new Canal.parcial(nome, linkLogo, linkVideo, idcategoria!));
       }
     } catch (e) {
@@ -131,9 +131,41 @@ class Canal {
   Future insert() async {
     Database dataBase = await SqlHelper().db;
     int valor = await dataBase.insert(TabelaCanal.NOME_TABELA, toMap());
-    print("Canal $nome ID: " + valor.toString());
-    print("Link video");
-    print(linkVideo);
+    //print("Canal $nome ID: " + valor.toString());
+    //print("Link video");
+    //print(linkVideo);
     return valor;
+  }
+
+  static Future<int> getCountCanaisPorLista(int idlista)  {
+    return Future<int>.delayed(Duration(seconds: 0), () async {
+      Database dataBase = await SqlHelper().db;
+      List listMap = await dataBase.rawQuery(TabelaCanal.getCountCanaisPorLista(idlista));
+      int total = 0;
+      print("COntando .........");
+      for (Map m in listMap) {
+        print(m.keys);
+        total = m['count(id)'] != null ? m['count(id)'] : 0;
+        // pagamentos.add(Pagamento.fromMapSqLite(m));
+      }
+      print("Total:"+total.toString());
+      return total;
+    });
+  }
+
+    static Future<int> getCountCategoriasPorLista(int idlista) {
+    return Future<int>.delayed(Duration(seconds: 0), () async {
+      Database dataBase = await SqlHelper().db;
+      List listMap = await dataBase.rawQuery(TabelaCanal.getCountCategoriasPorLista(idlista));
+      int total = 0;
+      String tbcat  = TabelaCanal.COL_CATEGORIA;
+      for (Map m in listMap) {//pra ler o map.
+        print(m.keys);
+        total = m['count(DISTINCT $tbcat)'] != null ? m['count(DISTINCT $tbcat)'] : 0;
+        // pagamentos.add(Pagamento.fromMapSqLite(m));
+      }
+      print("Total:"+total.toString());
+      return total;
+    });
   }
 }
