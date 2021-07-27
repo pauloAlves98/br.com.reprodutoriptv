@@ -7,25 +7,23 @@ import 'package:iptv/model/utils/Corrente.dart';
 import '../main.dart';
 import 'CardLista.dart';
 
-class ListaPage extends StatefulWidget {
-  static ListaPage? _instance; //Singleton
+
+class ListaPage extends StatelessWidget{
+  static ListaPage? _instance;//Singleton
   static List<Widget> widgets = [];
+  
   ListaPage._internal();
   static ListaPage? getInstance() {
-    if (_instance == null) _instance = ListaPage._internal();
+    widgets = [];
+    if (_instance == null) {_instance = ListaPage._internal(); print("Nova Instancia!");};
     return _instance;
   }
 
   @override
-  _ListaPageState createState() => _ListaPageState();
-}
-
-class _ListaPageState extends State<ListaPage> {
-
-  @override
   Widget build(BuildContext context) {
+    print("Recarregou oooooooooooooo");
     return Scaffold(
-      body: Container(
+     body: Container(
         decoration: BoxDecoration(
           gradient: GRADIENTE_BODY,
         ),
@@ -78,7 +76,7 @@ class _ListaPageState extends State<ListaPage> {
                 ],
               ),
               SliverToBoxAdapter(
-                child:  ListaPage.widgets.length<=0? FutureBuilder(
+                child:   ListaPage.widgets.length<=0? FutureBuilder(
                     future: _builderItems(Corrente.listasCorrente,context),
                     //initialData :"Aguardando os dados...",
 
@@ -142,4 +140,8 @@ class _ListaPageState extends State<ListaPage> {
       children: ListaPage.widgets,
     );
   }
+
+  
 }
+
+

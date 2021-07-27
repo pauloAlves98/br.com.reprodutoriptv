@@ -112,7 +112,7 @@ class Canal {
           categoria = grupo;
         }
         //consultar categoria;
-        List<Categoria> c = await Categoria.getAllPorNome(categoria);
+        List<Categoria> c = await Categoria.getAllPorNome(categoria, idlista);
         if (c.length <= 0) idcategoria = await Categoria.simples(categoria, idlista).insert();
         else idcategoria = c[0].id;
         
@@ -142,13 +142,13 @@ class Canal {
       Database dataBase = await SqlHelper().db;
       List listMap = await dataBase.rawQuery(TabelaCanal.getCountCanaisPorLista(idlista));
       int total = 0;
-      print("COntando .........");
+      print("Contando Canais em Canal.dart L: 145");
       for (Map m in listMap) {
         print(m.keys);
         total = m['count(id)'] != null ? m['count(id)'] : 0;
         // pagamentos.add(Pagamento.fromMapSqLite(m));
       }
-      print("Total:"+total.toString());
+      print("Total de Canais em Canal.dart L: 151:"+total.toString());
       return total;
     });
   }
@@ -167,5 +167,16 @@ class Canal {
       print("Total:"+total.toString());
       return total;
     });
+  }
+
+    static Future<List<Canal>> getAllCategoria(int? idcat) async {//close no banco
+    Database dataBase = await SqlHelper().db;
+    List listMap = await dataBase.rawQuery(TabelaCanal.getAllCategoria(idcat!));
+    print("ID de busca categoria: "+idcat.toString());
+    List <Canal> categorias = [];
+    for (Map m in listMap) {
+        categorias.add(Canal.fromMapSqLite(m));
+    }
+    return categorias;
   }
 }

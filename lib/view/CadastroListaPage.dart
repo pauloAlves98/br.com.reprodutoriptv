@@ -82,12 +82,8 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
                       Icon(Icons.upload_file, color: AZUL_ALTERNATIVO),
                       () async {
                         caminhoField.text = await FilePicker.getFilePath(
-                          type: FileType.custom,
-                          allowedExtensions: [
-                            'txt',
-                            'm3u8',
-                            "html",
-                          ],
+                          type: FileType.any,
+                         
                         );
                       },
                       true),
@@ -177,7 +173,7 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
                 // Navigator.of(context).pop();
               });
               return Container(
-                decoration: box(),
+                decoration: Constantes.box,
                 child: Center(
                   child: Text(
                     "Inserido com sucesso!",
@@ -200,7 +196,7 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
                 // Navigator.of(context).pop();
               });
               return Container(
-                decoration: box(),
+                decoration: Constantes.box,
                 child: Center(
                   child: Text(
                       isCanal
@@ -243,19 +239,13 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
       builder: (BuildContext context) {
         return Center(
             child: Container(
-                decoration: box(),
+                decoration: Constantes.box,
                 height: 300,
                 child: FittedBox(child: alerta)));
       },
     );
   }
 
-  BoxDecoration box() {
-    return BoxDecoration(
-      borderRadius: BorderRadius.only(
-          topRight: Radius.circular(15), topLeft: Radius.circular(15)),
-    );
-  }
 
   Widget inputform(String hint, TextEditingController controller, fvalidator,
       Icon icon, iconpressed, relyony) {

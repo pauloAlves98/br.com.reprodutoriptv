@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:iptv/model/bin/Cliente.dart';
 import 'package:iptv/view/CadastroListaPage.dart';
+import 'package:iptv/view/CanaisPage.dart';
 import 'package:iptv/view/HomePage.dart';
 import 'package:iptv/view/Splash.dart';
 import 'package:yoyo_player/yoyo_player.dart';
@@ -20,6 +21,7 @@ String SGBDPAGE = "/SGBDPAGE";
 String HOMEPAGE = "/HOMEPAGE";
 String CADASTROLISTAPAGE = "/CADASTROLISTAPAGE";
 String SPLASHPAGE = "/SPLASH";
+String CANALPAGE = "/SPLASH";
 void main() {
   runApp(
     MaterialApp(
@@ -33,7 +35,8 @@ void main() {
         SGBDPAGE: (_) => SGBDPage(),
         HOMEPAGE:(_) => HomePage.getInstance(),
         CADASTROLISTAPAGE:(_) => CadastroListaPage(),
-        SPLASHPAGE:(_) => Splash()
+        SPLASHPAGE:(_) => Splash(),
+        CANALPAGE:(_) => CanaisPage.getInstance(),
       },
     ),
   );

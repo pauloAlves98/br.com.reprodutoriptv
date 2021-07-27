@@ -14,8 +14,13 @@ class TabelaCategoria{
     "FOREIGN KEY($COL_LISTA) REFERENCES "+ TabelaLista.NOME_TABELA+"("+TabelaLista.COL_ID+"));";
 
 
-  static String getAllPorNome(String nome) {
-    return "SELECT * FROM $NOME_TABELA where $COL_NOME='$nome'";
+  static String getAllPorNome(String nome, int idlista) {
+    return "SELECT * FROM $NOME_TABELA where $COL_NOME='$nome' and $COL_LISTA='$idlista'";
+  }
+
+  static String getAllLista(int idlista) {
+    String auxid = idlista.toString();
+    return "SELECT * FROM $NOME_TABELA where $COL_LISTA='$auxid'";
   }
 
 static String removeAllLista(int idlista) {

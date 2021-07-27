@@ -34,5 +34,9 @@ class TabelaCanal{
   static String removeAllLista(int idlista) {
     return "DELETE FROM $NOME_TABELA where $COL_LISTA='$idlista'";
   }
+   static String getAllCategoria(int idcat) {
+    String auxid = idcat.toString();
+    return "SELECT * FROM $NOME_TABELA where $COL_CATEGORIA='$auxid'";
+  }
 
 }

@@ -94,15 +94,23 @@ class Categoria {
       });
   }
 
-  static Future<List<Categoria>> getAllPorNome(String nome) async {//close no banco
+  static Future<List<Categoria>> getAllPorNome(String nome, int idlista) async {//close no banco
     Database dataBase = await SqlHelper().db;
-    List listMap = await dataBase.rawQuery(TabelaCategoria.getAllPorNome(nome));
+    List listMap = await dataBase.rawQuery(TabelaCategoria.getAllPorNome(nome, idlista));
     List <Categoria> categorias = [];
     for (Map m in listMap) {
         categorias.add(Categoria.fromMapSqLite(m));
     }
     return categorias;
   }
-
+    static Future<List<Categoria>> getAllLista(int idlista) async {//close no banco
+    Database dataBase = await SqlHelper().db;
+    List listMap = await dataBase.rawQuery(TabelaCategoria.getAllLista(idlista));
+    List <Categoria> categorias = [];
+    for (Map m in listMap) {
+        categorias.add(Categoria.fromMapSqLite(m));
+    }
+    return categorias;
+  }
 
 }

@@ -127,7 +127,7 @@ class _HomePageState extends State<HomePage> {
         return ListaPage.getInstance();
       }
       else if(index==1){
-        return CanaisPage();
+        return CanaisPage.getInstance();
       }
       else if(index==2){
         return ContaPage.getInstance();

@@ -20,6 +20,9 @@ const LinearGradient GRADIENTE_BODY = LinearGradient(
 
 class Constantes {
  static AssetImage USER_ASSET = AssetImage("assets/user.png");
+  static BoxDecoration box =  BoxDecoration(
+      borderRadius: BorderRadius.only(
+          topRight: Radius.circular(15), topLeft: Radius.circular(15)),
+    );
+
 }
-
-
