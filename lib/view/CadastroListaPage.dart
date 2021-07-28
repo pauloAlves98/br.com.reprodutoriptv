@@ -43,6 +43,13 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
             ),
           ),
         ),
+        leading:IconButton(
+          icon: Icon(Icons.arrow_back_ios_new_sharp),
+          onPressed: (){
+             //Navigator.pop(context);
+              Navigator.popAndPushNamed(context, HOMEPAGE);
+          },
+        ),
         actions: [],
       ),
 
@@ -168,7 +175,8 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
                 Corrente.listasCorrente =
                     await Lista.getAllCliente(Corrente.clienteCorrente.id);
                 // limparCampos();
-                Navigator.pushReplacementNamed(context, HOMEPAGE);
+                Navigator.of(context).pop();
+                Navigator.popAndPushNamed(context, HOMEPAGE);
                 //  Navigator.pushReplacementNamed(context, HOMEPAGE);
                 // Navigator.of(context).pop();
               });
@@ -191,7 +199,8 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
                 Corrente.listasCorrente =
                     await Lista.getAllCliente(Corrente.clienteCorrente.id);
                 // limparCampos();
-                Navigator.pushReplacementNamed(context, HOMEPAGE);
+                Navigator.pop(context);
+                Navigator.popAndPushNamed(context, HOMEPAGE);
                 //  Navigator.pushReplacementNamed(context, HOMEPAGE);
                 // Navigator.of(context).pop();
               });

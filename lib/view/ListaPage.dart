@@ -8,20 +8,24 @@ import '../main.dart';
 import 'CardLista.dart';
 
 
-class ListaPage extends StatelessWidget{
-  static ListaPage? _instance;//Singleton
+class ListaPage extends StatefulWidget{
+
   static List<Widget> widgets = [];
-  
-  ListaPage._internal();
-  static ListaPage? getInstance() {
-    widgets = [];
-    if (_instance == null) {_instance = ListaPage._internal(); print("Nova Instancia!");};
-    return _instance;
+  ListaPage(){
+    print("Lista Pageeeeeeeeeeeeeeeeeeeeeeeeee");
   }
+  ListaPage._internal();
 
   @override
+  _ListaPageState createState() => _ListaPageState();
+}
+
+class _ListaPageState extends State<ListaPage> {
+  _ListaPageState(){
+    print("Lista staeeeeeeeeeeeeeeeeee");
+  }
+  @override
   Widget build(BuildContext context) {
-    print("Recarregou oooooooooooooo");
     return Scaffold(
      body: Container(
         decoration: BoxDecoration(
@@ -76,7 +80,7 @@ class ListaPage extends StatelessWidget{
                 ],
               ),
               SliverToBoxAdapter(
-                child:   ListaPage.widgets.length<=0? FutureBuilder(
+                child:   Corrente.listasCorrente!=null && Corrente.listasCorrente.length>0? FutureBuilder(
                     future: _builderItems(Corrente.listasCorrente,context),
                     //initialData :"Aguardando os dados...",
 
@@ -132,6 +136,7 @@ class ListaPage extends StatelessWidget{
   }
 
   Future<Widget> _builderItems(List<Lista> listas, context) async {
+     ListaPage.widgets = [];
     for (int i = 0; i < listas.length; i++) {
       Lista l = listas[i];
       ListaPage.widgets.add(await builderCardLista(context, l));
@@ -140,8 +145,6 @@ class ListaPage extends StatelessWidget{
       children: ListaPage.widgets,
     );
   }
-
-  
 }
 
 

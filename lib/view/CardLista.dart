@@ -130,6 +130,7 @@ Future<Widget> builderCardLista(context, Lista lista) async {
                         ListaPage.widgets = [];
                         Corrente.listasCorrente = await Lista.getAllCliente(
                             Corrente.clienteCorrente.id);
+                       
                         Navigator.pushReplacementNamed(context, HOMEPAGE); //atualiza a pagina! falta listar canais por categoria e executar player.
                       },
                     ),

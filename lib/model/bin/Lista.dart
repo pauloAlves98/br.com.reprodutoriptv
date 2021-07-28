@@ -108,7 +108,7 @@ class Lista {
   static Future popularLista(String nome, String caminho, int idcliente) async {
     Lista listac = new Lista.simples(nome, caminho);
     listac.idcliente = idcliente;
-    listac.datamodificacao =  DateFormat.yMMMd().format(DateTime.now()).toString();
+    listac.datamodificacao =  DateFormat('dd-MM-yyyy').format(DateTime.now()).toString();
     List<Canal>? canais;
     try {
       List? lista = await Lista.carregaLista(caminho);

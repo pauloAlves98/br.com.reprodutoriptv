@@ -8,16 +8,12 @@ import 'package:iptv/view/ListaPage.dart';
 import 'ContaPage.dart';
 
 class HomePage extends StatefulWidget {
-  static HomePage _instance; //Singleton
   static int cIndex = 0;
-
-  HomePage._internal();
-  static HomePage getInstance() {
-    if (_instance == null) _instance = HomePage._internal();
-    return _instance;
-  }
-
   //const HomePage({ Key? key }) : super(key: key);
+  HomePage(){
+    HomePage.cIndex = 0;
+    print("Criou Home eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+  }
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -124,13 +120,13 @@ class _HomePageState extends State<HomePage> {
   }
     Widget retornoPagina(index)  {
       if(index==0){
-        return ListaPage.getInstance();
+        return ListaPage(); //ajeitar exceptio ao voltatr de exibir canais page!
       }
       else if(index==1){
-        return CanaisPage.getInstance();
+        return CanaisPage();
       }
       else if(index==2){
-        return ContaPage.getInstance();
+        return ContaPage();
       }
   }
 }

@@ -88,8 +88,8 @@ class Cliente extends Usuario{
       List<Cliente> listas = [];
       for (Map m in listMap) {
         listas.add(Cliente.fromMapSqLite(m));
-        print(Cliente.fromMapSqLite(m).nome);
-        print(Cliente.fromMapSqLite(m).id.toString());
+       // print(Cliente.fromMapSqLite(m).nome);
+       // print(Cliente.fromMapSqLite(m).id.toString());
       }
       return listas;
     });

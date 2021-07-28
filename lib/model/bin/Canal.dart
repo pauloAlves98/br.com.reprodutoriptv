@@ -123,7 +123,7 @@ class Canal {
       throw new Exception(//criar exception personalisadas
           "Erro ao ler arquivo classe canais : " + e.toString());
     }
-    print("Saiu de canais"); //printa primeiro, pois metodos async eh pulado.
+    print("Saiu de canais l:126"); //printa primeiro, pois metodos async eh pulado.
     return canais;
   }
 
@@ -144,7 +144,7 @@ class Canal {
       int total = 0;
       print("Contando Canais em Canal.dart L: 145");
       for (Map m in listMap) {
-        print(m.keys);
+        //print(m.keys);
         total = m['count(id)'] != null ? m['count(id)'] : 0;
         // pagamentos.add(Pagamento.fromMapSqLite(m));
       }

@@ -1,6 +1,4 @@
 //@dart=2.9
-
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:iptv/model/bin/Cliente.dart';
@@ -16,12 +14,24 @@ import 'model/bin/Administrador.dart';
 import 'model/bin/Canal.dart';
 import 'model/bin/Categoria.dart';
 import 'model/bin/Lista.dart';
+import 'view/ExibirCanalPage.dart';
 
 String SGBDPAGE = "/SGBDPAGE";
 String HOMEPAGE = "/HOMEPAGE";
 String CADASTROLISTAPAGE = "/CADASTROLISTAPAGE";
 String SPLASHPAGE = "/SPLASH";
-String CANALPAGE = "/SPLASH";
+String CANALPAGE = "/CANALPAGE";
+String EXIBIRCANALPAGE = "/ EXIBIRCANALPAGE";
+
+Map<String, WidgetBuilder> routes =  {
+        "/": (_) => Splash(),
+        SGBDPAGE: (_) => SGBDPage(),
+        HOMEPAGE:(_) => HomePage(),
+        CADASTROLISTAPAGE:(_) => CadastroListaPage(),
+        SPLASHPAGE:(_) => Splash(),
+        CANALPAGE:(_) => CanaisPage(),
+        EXIBIRCANALPAGE:(_) => ExibirCanalPage(),
+      };
 void main() {
   runApp(
     MaterialApp(
@@ -29,15 +39,8 @@ void main() {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      debugShowCheckedModeBanner: false,
-      routes: {
-        "/": (_) => Splash(),
-        SGBDPAGE: (_) => SGBDPage(),
-        HOMEPAGE:(_) => HomePage.getInstance(),
-        CADASTROLISTAPAGE:(_) => CadastroListaPage(),
-        SPLASHPAGE:(_) => Splash(),
-        CANALPAGE:(_) => CanaisPage.getInstance(),
-      },
+      debugShowCheckedModeBanner: true,
+      routes: routes,
     ),
   );
 }

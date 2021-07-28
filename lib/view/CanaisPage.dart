@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iptv/main.dart';
 import 'package:iptv/model/bin/Canal.dart';
 import 'package:iptv/model/bin/Categoria.dart';
 import 'package:iptv/model/utils/Constantes.dart';
 import 'package:iptv/model/utils/Corrente.dart';
+import 'package:iptv/view/ExibirCanalPage.dart';
 
 class CanaisPage extends StatefulWidget {
-  static CanaisPage? _instance; //Singleton
-  List<Widget> widgets = [];
-
-  CanaisPage._internal();
-  static CanaisPage? getInstance() {
-    if (_instance == null) _instance = CanaisPage._internal();
-    return _instance;
-  }
-
+   CanaisPage();
   @override
   _CanaisPageState createState() => _CanaisPageState();
 }
@@ -152,10 +146,10 @@ class _CanaisPageState extends State<CanaisPage> {
     Future<Widget> builderAllCanais(Categoria categoria) async {
     List<Widget> filhos = [];
     List<Canal> canais = await Canal.getAllCategoria(categoria.id);
-       print("Canais:");
+    print("Canais:");
     print(canais .length.toString());
     for (Canal can in canais){
-      print(can.nome);
+      //print(can.nome);
         filhos .add(builderCardCanal(can));
     }
  
@@ -212,7 +206,11 @@ class _CanaisPageState extends State<CanaisPage> {
                   message: "Executar",
                   child: IconButton(
                     icon: Icon(Icons.play_arrow_outlined),
-                    onPressed: () {},
+                    onPressed: () {
+                      Corrente.canalCorrente = canal;
+                      Navigator.pushReplacementNamed(context, EXIBIRCANALPAGE);
+                      //dispose();
+                    },
                   ),
                 ),
               ),

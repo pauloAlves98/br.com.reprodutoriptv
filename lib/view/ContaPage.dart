@@ -4,13 +4,13 @@ import 'package:iptv/model/utils/Constantes.dart';
 import 'package:iptv/model/utils/Corrente.dart';
 
 class ContaPage extends StatefulWidget {
-  static ContaPage? _instance; //Singleton
 
-  ContaPage._internal();
-  static ContaPage? getInstance() {
-    if (_instance == null) _instance = ContaPage._internal();
-    return _instance;
+  
+  ContaPage(){
+    print("Criou contaaaa");
   }
+  ContaPage._internal();
+ 
 
   @override
   _ContaPageState createState() => _ContaPageState();
