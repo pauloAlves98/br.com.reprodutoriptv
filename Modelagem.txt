@@ -2,43 +2,52 @@
 ENTIDADES E RELACIONAMENTOS
 
 USUARIO 
-	- ID - INT PK
-	- NOME - STRING
-	- CODIGO - STRING
-	- LOGIN - STRING
-	- SENHA - STRING
-	- STATUS - STRING
-	- urlFoto - STRING ;
+ 	int? _id;// ? indica que pode ser null
+  	String _nome = ""; //tem que inicializar.
+  	String _codigo = "";
+  	String _login = "";
+  	String _senha = "";
+  	String _status = "ATIVO";
+  	String _urlFoto = "";
 ADM - EXTEND USER
-	- SUPERUSER - BOOL
+	int _superuser = 0;
 CLIENTE - EXTEND USER
-	- VENCIMENTO - DATE
-	- ADM 1-N FKEY - UM ADM GERENCIA UM OU MAIS CLIENTES
+	String? _dataVencimento;
+  	int? _adm; //1-N FKEY - UM ADM GERENCIA UM OU MAIS CLIENTES
 LISTA
-	- ID - INT PK
-	- NOME - STRING
-	- LINK - STRING
-	- CLIENTE 1-N FKEY - UM CLIENTE PODE CARREGAR MAIS DE UMA LISTA
-	- DATA_MOD - DATE
-	- STATUS - STRING
+	int? _id;
+  	String? _nome;
+  	String? _link; //endreco da lista.
+ 	int? _idcliente;
+  	//UM CLIENTE PODE CARREGAR MAIS DE UMA LISTA
+  	String? _datamodificacao;
+  	String? _status = "ATIVO";
 CANAL
-	- ID - INT PK
-	- NOME - STRING 
-	- LOGO - STRING
-	- LINK - STRING
-	- STATUS - STRING
-	- LISTA 1-N FKEY - CANAL PERTENECE A UMA LISTA, MAIS UMA LISTA PODE TER EM VARIOS CANAIS
-	- CATEGORIA 1-N - CATEGORIA PODE TER MAIS DE UM CANAL, E CANAL PERTENCE A UMA CATEGORIA.
+	int? _id;
+  	String? _nome;
+  	String? _linkLogo;
+  	String? _linkVideo;
+	String? _status = 'ATIVO';
+  	int? _idlista;
+  	//CANAL PERTENCE A SÓ UMA LISTA 
+  	int? _idcategoria;
+	1-N -  CATEGORIA PODE TER MAIS DE UM CANAL, E CANAL PERTENCE A UMA CATEGORIA.
+CATEGORIA
+	int? _id;
+  	String? _nome;
+ 	int? _idlista; //PERTENCE A UMA SÓ LISTA 1-N
+  	String? _status = "ATIVA";
 
+- REQUISITOS FALTANTES
+	- IMPLANTAR AUTENTICAÇÃO
+	- MELHORAR TELA DE CANAIS
+	- MELHORAR EXIBIÇÃO DE CANAIS
+	- TELA DE SELEÇÃO DE LISTA NO INICIO! TIPO AMAZON!
+	- MELHORAR EXIBIÇÃO DAS LISTAS
+	- NOME DA LISTA NA TELA CANAIS
+	- IMPLANTAR FUNÇÃO PESQUISAR
+	- A CHEWEE TEM UM BUG QUANDO ABRE EM TELA CHEIA E TENTA VOLTAR PARA PAGE ANTERIOR!
+	- MELHORAR PERFORMACE AO RECARREGAR TELA DE LISTA E CANAIS!
+	- CLOSE NO BANCO AO EXECUTAR OPERAÇÕES
+	- CRIAR EXCEÇÕES PERSONALIZADAS 
 
-UI
-
-ABA LISTA	
-	- CONTEM INFO LISTA
-	- QNT CANAIS DADO.
-
-ABA CANAIS
-	- ESTILO AMAZOM
-
-ABA CONTA 
-	- DADOS DO CLIENTE. - Sliding Card 

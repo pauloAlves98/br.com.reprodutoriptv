@@ -1,6 +1,7 @@
 //@dart=2.9
 import 'package:flutter/material.dart';
 import 'package:flutter_sqflite_manager/flutter_sqflite_manager.dart';
+import 'package:iptv/view/HomePage.dart';
 import 'package:sqflite/sqflite.dart';
 import 'main.dart';
 import 'model/sqlite/SqlHelper.dart';
@@ -20,7 +21,7 @@ class _SGBDPageState extends State<SGBDPage> {
           return SqfliteManager(
               database: snapshot.data,
               enable: true,
-              child: MyApp.getInstance(),
+              child: HomePage(),
           );
         } else {
           return Container(

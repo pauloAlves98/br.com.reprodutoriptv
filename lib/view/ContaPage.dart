@@ -3,12 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iptv/model/utils/Constantes.dart';
 import 'package:iptv/model/utils/Corrente.dart';
 
+
+//Essa classe trabalha com Corrente.clienteCorrente!
 class ContaPage extends StatefulWidget {
 
   
-  ContaPage(){
-    print("Criou contaaaa");
-  }
+  ContaPage(){}
+
+  /// Construtor interno e privado!
   ContaPage._internal();
  
 
@@ -66,7 +68,7 @@ class _ContaPageState extends State<ContaPage> {
   }
 
   Widget cardItem(String title, String subtitle) {
-    return Padding(
+    return Padding( //EM TODO O CARD
       padding: const EdgeInsets.all(4.0),
       child: Card(
         shape: RoundedRectangleBorder(

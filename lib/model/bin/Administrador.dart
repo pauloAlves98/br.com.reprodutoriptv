@@ -44,13 +44,13 @@ class Administrador extends Usuario{
   int get superuser => this._superuser;
   set superuser(int value) => this._superuser = value;
   
-  //metodos de conversão
 
-  //metodos de acesso ao bd.
+
+//metodos de acesso ao bd.
  Future insert() async {
     Database dataBase = await SqlHelper().db;
     //insere adm tbm e pega o retorno. se 0 ou null. já existe.
-     int valor = 0;
+    int valor = 0;
     try{
       valor = await dataBase.insert(TabelaAdministrador.NOME_TABELA, toMap());
       print("ID ADM: "+valor.toString());

@@ -12,7 +12,7 @@ class Splash extends StatefulWidget {
   _SplashState createState() => _SplashState();
 }
 
-class _SplashState extends State<Splash> {
+class _SplashState extends State<Splash> { // Modificar esse splash!
   @override
   void initState() {
     super.initState();
@@ -20,9 +20,11 @@ class _SplashState extends State<Splash> {
   }
 
   startTime() async {
+
+    //TEMPORÁRIO, POR ENQUANTO .
     List <Cliente> clientes = await Cliente.getAll();
     if(clientes.isEmpty){
-      Corrente.clienteCorrente =  Cliente.full("User Teste", "CODTEST#21  ", "USERTEST@EMAIL", "123456", DateFormat.yMMMd().format(DateTime.now()).toString(), 1);
+      Corrente.clienteCorrente =  Cliente.full("Paulo Alves", "github.com/pauloAlves98", "ALVES@GMAIL.COM", "123456", DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(), 1);
       await Corrente.clienteCorrente.insert();
     }
     return new Timer(new Duration(seconds: 3), navigationPage);
@@ -32,7 +34,7 @@ class _SplashState extends State<Splash> {
     List <Cliente> clientes = await Cliente.getAll();  //temporario. 
     Corrente.clienteCorrente = clientes.last;
     Corrente.listasCorrente = await Lista.getAllCliente(Corrente.clienteCorrente.id);
-    print("Carrega splash!");
+    print("CLIENTE LOAD EM SPLASH!");
     Navigator.pushReplacementNamed(context, HOMEPAGE);
    
   }

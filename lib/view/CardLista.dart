@@ -14,10 +14,13 @@ import '../main.dart';
 import 'HomePage.dart';
 import 'ListaPage.dart';
 
+
+/// Cria uma lista com seus dados
+/// O   Corrente.listasCorrente é atualizado quando uma lista é excluida!
 Future<Widget> builderCardLista(context, Lista lista) async {
   int countcanais = await Canal.getCountCanaisPorLista(
       lista.id); //quantidade de canais associados a lista.
-  int countcat = await Canal.getCountCategoriasPorLista(lista.id);
+  int countcat = await Categoria.getCountCategoriasPorLista(lista.id);
 
   //print("CANAIS: " + countcanais.toString());
   return Padding(
@@ -41,11 +44,12 @@ Future<Widget> builderCardLista(context, Lista lista) async {
                 color: AZUL_ESCURO,
               ),
               height: 40,
-              child: Row(
+              //Linha para inserção do nome e id!
+              child: Row( 
                 children: <Widget>[
                   Expanded(
                       flex: 1,
-                      child: Text(
+                      child: Text( // id
                         lista.id.toString(),
                         style: GoogleFonts.encodeSans(
                             color: Colors.white, fontSize: 14),
@@ -53,7 +57,7 @@ Future<Widget> builderCardLista(context, Lista lista) async {
                       )),
                   Expanded(
                       flex: 2,
-                      child: Text(
+                      child: Text( // nome
                         lista.nome,
                         style: GoogleFonts.encodeSans(
                             color: Colors.white, fontSize: 20),
@@ -62,6 +66,7 @@ Future<Widget> builderCardLista(context, Lista lista) async {
                 ],
               ),
             ),
+
             // linha lado a lado
             cardListaItem("Canais", countcanais.toString(), "Categorias",
                 countcat.toString()),
@@ -95,7 +100,7 @@ Future<Widget> builderCardLista(context, Lista lista) async {
                       child: Text('Carregar',
                           style: TextStyle(color: AZUL_ALTERNATIVO)),
                       onPressed: () {
-                        print("Carregar Canais!");
+                        print("Carregar Canais - Card Lista Item!");
                         showAlertDialogCarregarLista(context, Categoria.getAllLista(lista.id));
                       },
                     ),
@@ -127,10 +132,11 @@ Future<Widget> builderCardLista(context, Lista lista) async {
                         await Lista.deleteCascade(
                             lista.id); //colocar dentro de um future alert.
 
-                        ListaPage.widgets = [];
+                        ListaPage.widgets = []; //Não precisa!
+
                         Corrente.listasCorrente = await Lista.getAllCliente(
                             Corrente.clienteCorrente.id);
-                       
+                        HomePage.cIndex = 0;
                         Navigator.pushReplacementNamed(context, HOMEPAGE); //atualiza a pagina! falta listar canais por categoria e executar player.
                       },
                     ),
@@ -145,9 +151,13 @@ Future<Widget> builderCardLista(context, Lista lista) async {
   );
 }
 
+/// t1: titulo da coluna esquerda
+/// st1: subtitulo da coluna esquerda
+/// t2: titulo da coluna a direita
+/// st2 subtitulo da coluna a direita
 Widget cardListaItem(String t1, String st1, String t2, String st2) {
   //t1 = title st1 = subtilte
-  print("Card Lista item");
+  print("--Card Lista item--- l: 160");
   return Row(
     children: [
       Expanded(
@@ -173,6 +183,9 @@ Widget cardListaItem(String t1, String st1, String t2, String st2) {
   );
 }
 
+/// Ocorre a atualização de Corrente.categoriasCorrente em caso de lista carregada com sucesso!
+/// 
+/// futures: Função async para carregamento no banco das categorias!
 showAlertDialogCarregarLista(BuildContext context, futures) {
 
     AlertDialog alerta = AlertDialog(
@@ -192,10 +205,10 @@ showAlertDialogCarregarLista(BuildContext context, futures) {
               // suc = true;
               Corrente.categoriasCorrente = snapshot.data as List<Categoria>;//carregou categoias
               // ListaPage.widgets = [];
-              Timer(new Duration(seconds: 1), () async {
-                Navigator.of(context).pop();
-               
-                //Navigator.pushReplacementNamed(context, CANALPAGE);
+              Timer(new Duration(seconds: 2), () async {
+                Navigator.of(context).pop();///POP PARA TIRAR ALERT DA TELA
+                HomePage.cIndex = 1;
+                Navigator.pushReplacementNamed(context, HOMEPAGE);
 
               });
               return Container(
@@ -217,6 +230,8 @@ showAlertDialogCarregarLista(BuildContext context, futures) {
                 Corrente.listasCorrente =
                     await Lista.getAllCliente(Corrente.clienteCorrente.id);
                 // limparCampos();
+                Navigator.of(context).pop();///POP PARA TIRAR ALERT DA TELA
+                HomePage.cIndex = 0;
                 Navigator.pushReplacementNamed(context, HOMEPAGE);
                 //  Navigator.pushReplacementNamed(context, HOMEPAGE);
                 // Navigator.of(context).pop();

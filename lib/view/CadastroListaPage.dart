@@ -1,12 +1,10 @@
 import 'dart:async';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iptv/model/bin/Lista.dart';
 import 'package:iptv/model/utils/Constantes.dart';
 import 'package:iptv/model/utils/Corrente.dart';
-
 import '../main.dart';
 import 'ListaPage.dart';
 
@@ -18,8 +16,8 @@ class CadastroListaPage extends StatefulWidget {
 class _CadastroListaPageState extends State<CadastroListaPage> {
   TextEditingController nomeField = new TextEditingController();
   TextEditingController caminhoField = new TextEditingController();
-  bool autovalidar = false;
-  bool flagErro = false;
+  //bool autovalidar = false;
+  //bool flagErro = false;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -47,7 +45,7 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
           icon: Icon(Icons.arrow_back_ios_new_sharp),
           onPressed: (){
              //Navigator.pop(context);
-              Navigator.popAndPushNamed(context, HOMEPAGE);
+             Navigator.of(context).pop();
           },
         ),
         actions: [],
@@ -90,7 +88,6 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
                       () async {
                         caminhoField.text = await FilePicker.getFilePath(
                           type: FileType.any,
-                         
                         );
                       },
                       true),
@@ -129,11 +126,11 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
                                   style: TextStyle(color: AZUL_ALTERNATIVO)),
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
-                                  print("Validou");
+                                  print("Validou o form: Cadastro Lista l:129");
                                   showAlertDialogLista(context, nomeField.text,
                                       caminhoField.text, 1);
                                 } else
-                                  print("Não Validou");
+                                  print("Não Validou o form: Cadastro Lista l:133");
                               },
                             ),
                           ),
@@ -149,9 +146,14 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
       ),
     );
   }
-
+  ///Atributos exceto context, são para popular função popularLista de Lista!
+  ///**nome**: *nome da lista*
+  ///
+  ///**caminho**: *caminho da lista no dispositivo*
+  ///
+  ///**caminho**: *id do cliente que essa lista ficara vinculada*
   showAlertDialogLista(BuildContext context, nome, caminho, idcliente) {
-    //ajeitar esse dialog e sincronizar lista e organizar canais e tela splash.
+    //DIALOG EH MUITO BAGUNÇADO EM FLUTTER!
     // configura o  AlertDialog
     //bool suc = false;
     AlertDialog alerta = AlertDialog(
@@ -163,20 +165,19 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
               style: GoogleFonts.oswald(color: Colors.white))),
       content: FutureBuilder(
           future: Lista.popularLista(nome, caminho, idcliente),
-          //initialData :"Aguardando os dados...",
+          //initialData :"Aguardando os dados...", //SE USAR ISSO, TERA QUE VERIFICAR POR    snapshot.connectionState!
 
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               //concluido
               // suc = true;
-
-              Timer(new Duration(seconds: 1), () async {
+              Timer(new Duration(seconds: 2), () async {
                 ListaPage.widgets = [];
                 Corrente.listasCorrente =
                     await Lista.getAllCliente(Corrente.clienteCorrente.id);
                 // limparCampos();
-                Navigator.of(context).pop();
-                Navigator.popAndPushNamed(context, HOMEPAGE);
+                //Navigator.of(context).pop();
+                Navigator.pushNamedAndRemoveUntil(context, HOMEPAGE, (route) => false);
                 //  Navigator.pushReplacementNamed(context, HOMEPAGE);
                 // Navigator.of(context).pop();
               });
@@ -191,16 +192,17 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
                 ),
               );
             } else if (snapshot.error != null) {
-              print("ERROOO");
+              print("ERRO AO INSERIR LISTA L: 190 - CADASTRO LISTA");
+             
               print(snapshot.error);
-              bool isCanal = snapshot.error!.toString().contains("canal");
-               Timer(new Duration(seconds: 1), () async {
+               bool isCanal = snapshot.error!.toString().contains("canal");
+               Timer(new Duration(seconds: 2), () async {
                 ListaPage.widgets = [];
                 Corrente.listasCorrente =
                     await Lista.getAllCliente(Corrente.clienteCorrente.id);
-                // limparCampos();
-                Navigator.pop(context);
-                Navigator.popAndPushNamed(context, HOMEPAGE);
+             
+                Navigator.of(context).pop();
+                // Navigator.popAndPushNamed(context, HOMEPAGE);
                 //  Navigator.pushReplacementNamed(context, HOMEPAGE);
                 // Navigator.of(context).pop();
               });
@@ -242,6 +244,7 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
         // ),
       ],
     );
+    ///Mostrar 
     showDialog(
       barrierDismissible: false,
       context: context,
@@ -255,7 +258,15 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
     );
   }
 
-
+  /// **hint**: *texto dentro do input*;
+  /// 
+  /// **controller**: *controle do input*;
+  /// 
+  /// **fvalidator**: *função validadora do input para o form*;
+  /// 
+  /// **icon**: *icone do input*;
+  /// 
+  /// **iconpressed**: *função ao pressionar icone do input*
   Widget inputform(String hint, TextEditingController controller, fvalidator,
       Icon icon, iconpressed, relyony) {
     return Padding(

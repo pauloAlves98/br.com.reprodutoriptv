@@ -10,4 +10,6 @@ class Corrente{
   static List<Lista> listasCorrente;
   static List<Categoria> categoriasCorrente;
   static Lista listaCorrente;
+
+  //criar getters e setters
 }

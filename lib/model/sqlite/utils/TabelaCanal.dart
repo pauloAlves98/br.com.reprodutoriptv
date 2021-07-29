@@ -27,10 +27,10 @@ class TabelaCanal{
     String id = idlista.toString();
     return "SELECT count($COL_ID) FROM $NOME_TABELA where $COL_LISTA = $id";
   }
-  static String getCountCategoriasPorLista(int idlista) {
-    String id = idlista.toString();
-    return "SELECT count(DISTINCT $COL_CATEGORIA) FROM $NOME_TABELA where $COL_LISTA = $id";
-  }
+  // static String getCountCategoriasPorLista(int idlista) {
+  //   String id = idlista.toString();
+  //   return "SELECT count(DISTINCT $COL_CATEGORIA) FROM $NOME_TABELA where $COL_LISTA = $id";
+  // }
   static String removeAllLista(int idlista) {
     return "DELETE FROM $NOME_TABELA where $COL_LISTA='$idlista'";
   }

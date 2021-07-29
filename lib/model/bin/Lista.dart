@@ -20,7 +20,7 @@ class Lista {
   int? _idcliente;
   //UM CLIENTE PODE CARREGAR MAIS DE UMA LISTA
   String? _datamodificacao;
-  String? _status = "ATIVO";
+  String? _status = "ATIVO"; //criar constantes
 
   Lista();
 
@@ -70,8 +70,7 @@ class Lista {
   set status(String? value) => this._status = value;
   //metodos de conversão
 
-  static Future<List<dynamic>?> carregaLista(
-    String caminho,
+  static Future<List<dynamic>?> carregaLista(String caminho   //extrai um vetor de listas [[info, http]]    String caminho,
   ) async {
     //extrai linhas do arquivo da lista
     List lista = [];
@@ -105,6 +104,11 @@ class Lista {
     return lista;
   }
 
+  ///**nome**: *nome da lista*
+  ///
+  ///**caminho**: *caminho da lista no dispositivo*
+  ///
+  ///**caminho**: *id do cliente que essa lista ficara vinculada*
   static Future popularLista(String nome, String caminho, int idcliente) async {
     Lista listac = new Lista.simples(nome, caminho);
     listac.idcliente = idcliente;
@@ -117,22 +121,20 @@ class Lista {
       List<Categoria>? categorias = await Categoria.carregaCategoria(lista!, listac.id);
       print("TAMANHO CATEGORIA: " + categorias!.length.toString());
       List<dynamic> iall = await Categoria.insertAll(categorias); //lista de id
-      print("IDS CATEGORIAS");
-      print(iall.length);
-      print("ACAABOUUUUUUUUU CATEGORIA");
+      print("FIM LOAD CATEGORIA L: 119 CLASS LISTA");
 
-      //canais
+
       canais = await Canal.carregaCanais(lista, listac.id);
-      print("Canais: ");
+      print("Load Canais:");
       print(canais!.length);
 
-      print("Popular lista: rodando canais!");
+      print("Popular lista: rodando canais!  L: 126 CLASS LISTA");
       for (Canal element in canais) {
        // print(element.linkVideo);
         element.idlista = listac.id;
         await element.insert();
       }
-      print("Acabou tudo: ");
+        print("FIM LOAD CANAIS L: 132 CLASS LISTA");
     } catch (e) {
       print("Popular Lista exception " + e.toString());
       throw Exception("Popular Lista exception: "+e.toString());
@@ -147,7 +149,7 @@ class Lista {
     print("Lista $nome ID: " + valor.toString());
     return valor;
   }
-
+   /// *Retorna todas as listas vinculadas a um cliente.*
   static Future<List<Lista>> getAllCliente(int id) {
     return Future<List<Lista>>.delayed(Duration(seconds: 1), () async {
       Database dataBase = await SqlHelper().db;
@@ -156,12 +158,13 @@ class Lista {
       List<Lista> listas = [];
       for (Map m in listMap) {
         listas.add(Lista.fromMapSqLite(m));
-        print(Lista.fromMapSqLite(m).nome);
-        print(Lista.fromMapSqLite(m).id.toString());
+        //print(Lista.fromMapSqLite(m).nome);
+       //print(Lista.fromMapSqLite(m).id.toString());
       }
       return listas;
     });
   }
+   /// *Deleta todas as categorias e canais vinculados a uma lista, incluindo a lista!*
     static Future<List<dynamic>> deleteCascade(int idlist) async {
     Database dataBase = await SqlHelper().db;
      return await dataBase.transaction((txn) async {

@@ -76,10 +76,11 @@ class Cliente extends Usuario{
       print("ID Cliente: "+valor.toString());
     }catch(ex){
        print('Failed to insert: ' + ex.toString());
+       throw Exception("Class Cliente L:79 "+ex.toString());
     }
     return valor;
   }
-
+    /// *Retorna todos os clientes.*
     static Future<List<Cliente>> getAll() {
     return Future<List<Cliente>>.delayed(Duration(seconds: 1), () async {
       Database dataBase = await SqlHelper().db;

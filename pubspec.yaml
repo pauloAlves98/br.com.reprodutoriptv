@@ -29,10 +29,12 @@ dependencies:
   intl: ^0.15.7
   file_picker: ^1.6.3+2
   google_fonts: ^1.1.2
-
+  optimized_cached_image: ^1.0.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  video_player: ^0.11.1+5
+  chewie: ^0.10.4
 
 dev_dependencies:
   flutter_test:
@@ -53,6 +55,7 @@ flutter:
   assets:
     - assets/canais.txt
     - assets/user.png
+    - assets/imagenotfound.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

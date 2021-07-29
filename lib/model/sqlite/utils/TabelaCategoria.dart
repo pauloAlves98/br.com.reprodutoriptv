@@ -26,5 +26,8 @@ class TabelaCategoria{
 static String removeAllLista(int idlista) {
     return "DELETE FROM $NOME_TABELA where $COL_LISTA='$idlista'";
   }
- 
+   static String getCountCategoriasPorLista(int idlista) {
+    String id = idlista.toString();
+    return "SELECT count(DISTINCT $COL_ID) FROM $NOME_TABELA where $COL_LISTA = $id";
+  }
 }

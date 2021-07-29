@@ -74,18 +74,26 @@ class Canal {
 
   get status => this._status;
   set status(value) => this._status = value;
-
-  static Future<List<Canal>?> carregaCanais(List<dynamic> lista, int idlista) async {
+  /// Retorna uma Lista de canais, extraidos de um vetor de dados obitidos de uma lista.
+  /// 
+  /// Atenção: Esse método está vinculado a operações com o bd para inserções de categorias não existentes.
+  /// 
+  ///**Lista lista**: *Lista  de [[string contendo informações do Extinf, String contendo Informações do http]] *
+  ///
+  ///**Lista lista**: *Id da Lista vinculada aos canais.*
+  static Future<List<Canal>?> carregaCanais(
+      List<dynamic> lista, int idlista) async {
     //lista vinda do metodo carrega lista de Lista.
     //lançar exceçoe personalizadas
     List<Canal> canais = [];
-    print("EXEcutar canias");
+    print("PROCESSANDO CANAIS!");
     try {
-      for (dynamic line in lista) {//for each nao funfa bem com future;
-    
+      for (dynamic line in lista) {
+        //for each nao funfa bem com future;
+
         String extinf = line[0];
         String http = line[1];
-       
+
         String? nome =
             extinf.replaceAll(RegExp(r'[^]+,'), '').trimLeft().length <= 0
                 ? "SEM NOME"
@@ -113,17 +121,20 @@ class Canal {
         }
         //consultar categoria;
         List<Categoria> c = await Categoria.getAllPorNome(categoria, idlista);
-        if (c.length <= 0) idcategoria = await Categoria.simples(categoria, idlista).insert();
-        else idcategoria = c[0].id;
-        
-         //print("Video: "+linkVideo);
+        if (c.length <= 0)
+          idcategoria = await Categoria.simples(categoria, idlista).insert();
+        else
+          idcategoria = c[0].id;
+
+        //print("Video: "+linkVideo);
         canais.add(new Canal.parcial(nome, linkLogo, linkVideo, idcategoria!));
       }
     } catch (e) {
       throw new Exception(//criar exception personalisadas
           "Erro ao ler arquivo classe canais : " + e.toString());
     }
-    print("Saiu de canais l:126"); //printa primeiro, pois metodos async eh pulado.
+    print(
+        "Saiu Processo Canais l:126"); //printa primeiro, pois metodos async eh pulado.
     return canais;
   }
 
@@ -137,45 +148,33 @@ class Canal {
     return valor;
   }
 
-  static Future<int> getCountCanaisPorLista(int idlista)  {
+  /// *Retorna o número de canais vinculados a uma lista.*
+  static Future<int> getCountCanaisPorLista(int idlista) {
     return Future<int>.delayed(Duration(seconds: 0), () async {
       Database dataBase = await SqlHelper().db;
-      List listMap = await dataBase.rawQuery(TabelaCanal.getCountCanaisPorLista(idlista));
+      List listMap =
+          await dataBase.rawQuery(TabelaCanal.getCountCanaisPorLista(idlista));
       int total = 0;
-      print("Contando Canais em Canal.dart L: 145");
+      // print("Contando Canais em Canal.dart L: 145");
       for (Map m in listMap) {
         //print(m.keys);
         total = m['count(id)'] != null ? m['count(id)'] : 0;
         // pagamentos.add(Pagamento.fromMapSqLite(m));
       }
-      print("Total de Canais em Canal.dart L: 151:"+total.toString());
+      print("Total de Canais em Canal.dart L: 151:" + total.toString());
       return total;
     });
   }
 
-    static Future<int> getCountCategoriasPorLista(int idlista) {
-    return Future<int>.delayed(Duration(seconds: 0), () async {
-      Database dataBase = await SqlHelper().db;
-      List listMap = await dataBase.rawQuery(TabelaCanal.getCountCategoriasPorLista(idlista));
-      int total = 0;
-      String tbcat  = TabelaCanal.COL_CATEGORIA;
-      for (Map m in listMap) {//pra ler o map.
-        print(m.keys);
-        total = m['count(DISTINCT $tbcat)'] != null ? m['count(DISTINCT $tbcat)'] : 0;
-        // pagamentos.add(Pagamento.fromMapSqLite(m));
-      }
-      print("Total:"+total.toString());
-      return total;
-    });
-  }
-
-    static Future<List<Canal>> getAllCategoria(int? idcat) async {//close no banco
+   /// *Retorna todos os canais vinculados a uma categoria.*
+  static Future<List<Canal>> getAllCategoria(int? idcat) async {
+    //close no banco
     Database dataBase = await SqlHelper().db;
     List listMap = await dataBase.rawQuery(TabelaCanal.getAllCategoria(idcat!));
-    print("ID de busca categoria: "+idcat.toString());
-    List <Canal> categorias = [];
+    print("ID de busca categoria: " + idcat.toString());
+    List<Canal> categorias = [];
     for (Map m in listMap) {
-        categorias.add(Canal.fromMapSqLite(m));
+      categorias.add(Canal.fromMapSqLite(m));
     }
     return categorias;
   }
