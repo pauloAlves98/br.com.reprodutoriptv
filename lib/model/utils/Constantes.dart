@@ -14,9 +14,9 @@ const LinearGradient GRADIENTE_BODY = LinearGradient(
               colors:[AZUL_LEVE, AZUL_ESCURO],
 );
 class Constantes {
- static AssetImage USER_ASSET = AssetImage("assets/user.png");// Não sei como o garbage trata essa variavel quando carregada em massa!
- static AssetImage NOT_FOUND_IMAGE = AssetImage('assets/imagenotfound.png');
- static BoxDecoration box =  BoxDecoration(
+ static const AssetImage USER_ASSET = AssetImage("assets/user.png");// Não sei como o garbage trata essa variavel quando carregada em massa!
+ static const AssetImage NOT_FOUND_IMAGE = AssetImage('assets/imagenotfound.png');
+ static const BoxDecoration box =  BoxDecoration(
       borderRadius: BorderRadius.only(
           topRight: Radius.circular(15), topLeft: Radius.circular(15)),
     );

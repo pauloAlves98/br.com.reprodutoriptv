@@ -1,4 +1,3 @@
-import 'package:iptv/model/bin/Administrador.dart';
 import 'package:iptv/model/bin/Usuario.dart';
 import 'package:iptv/model/sqlite/SqlHelper.dart';
 import 'package:iptv/model/sqlite/utils/Comum.dart';

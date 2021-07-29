@@ -5,7 +5,6 @@ import 'package:iptv/model/bin/Canal.dart';
 import 'package:iptv/model/bin/Categoria.dart';
 import 'package:iptv/model/utils/Constantes.dart';
 import 'package:iptv/model/utils/Corrente.dart';
-import 'package:iptv/view/ExibirCanalPage.dart';
 import 'package:optimized_cached_image/widgets.dart';
 
 class CanaisPage extends StatefulWidget {

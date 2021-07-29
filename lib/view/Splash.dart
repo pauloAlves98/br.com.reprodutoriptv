@@ -24,7 +24,7 @@ class _SplashState extends State<Splash> { // Modificar esse splash!
     //TEMPORÁRIO, POR ENQUANTO .
     List <Cliente> clientes = await Cliente.getAll();
     if(clientes.isEmpty){
-      Corrente.clienteCorrente =  Cliente.full("Paulo Alves", "github.com/pauloAlves98", "ALVES@GMAIL.COM", "123456", DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(), 1);
+      Corrente.clienteCorrente =  Cliente.full("Developed by Paulo Alves", "github.com/pauloAlves98", "alvespaulo737@gmail.com", "123456", DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(), 1);
       await Corrente.clienteCorrente.insert();
     }
     return new Timer(new Duration(seconds: 3), navigationPage);

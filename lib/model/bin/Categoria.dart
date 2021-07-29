@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:iptv/model/sqlite/SqlHelper.dart';
 import 'package:iptv/model/sqlite/utils/TabelaCategoria.dart';
 import 'package:sqflite/sqflite.dart';

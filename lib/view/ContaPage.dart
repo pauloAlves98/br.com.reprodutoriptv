@@ -8,10 +8,10 @@ import 'package:iptv/model/utils/Corrente.dart';
 class ContaPage extends StatefulWidget {
 
   
-  ContaPage(){}
+  ContaPage();
 
   /// Construtor interno e privado!
-  ContaPage._internal();
+  //ContaPage._internal();
  
 
   @override
@@ -68,7 +68,7 @@ class _ContaPageState extends State<ContaPage> {
   }
 
   Widget cardItem(String title, String subtitle) {
-    return Padding( //EM TODO O CARD
+        return Padding( 
       padding: const EdgeInsets.all(4.0),
       child: Card(
         shape: RoundedRectangleBorder(

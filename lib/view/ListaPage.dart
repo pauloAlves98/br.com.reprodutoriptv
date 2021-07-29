@@ -10,7 +10,7 @@ import 'CardLista.dart';
 class ListaPage extends StatefulWidget {
   static List<Widget> widgets = [];
   ListaPage();
-  ListaPage._internal();
+  
 
   @override
   _ListaPageState createState() => _ListaPageState();
@@ -18,7 +18,7 @@ class ListaPage extends StatefulWidget {
 
 //Utiliza Corrente.clienteCorrente para printar seu nome! Utiliza Corrente.listasCorrente para verificar as listas já cadastradas!
 class _ListaPageState extends State<ListaPage> {
-  _ListaPageState() {}
+  _ListaPageState();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +41,7 @@ class _ListaPageState extends State<ListaPage> {
                     title: Text(
                       Corrente.clienteCorrente == null
                           ? "Sem nome"
-                          : Corrente.clienteCorrente.nome.toString(),
+                          : Corrente.clienteCorrente.nome.toString().length>20? Corrente.clienteCorrente.nome.toString().substring(0,20):Corrente.clienteCorrente.nome,
                       style: GoogleFonts.encodeSans(),
                     ), //dropdownbuttom e mostras as infon ao expandir
                   ),

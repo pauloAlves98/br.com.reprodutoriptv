@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iptv/model/bin/Canal.dart';
 import 'package:iptv/model/utils/Constantes.dart';
 import 'package:iptv/model/utils/Corrente.dart';
-import 'package:iptv/view/CanaisPage.dart';
 import 'package:video_player/video_player.dart';
-import 'package:yoyo_player/yoyo_player.dart';
+//import 'package:yoyo_player/yoyo_player.dart';
 
-import '../main.dart';
 import 'ChewieListItem.dart';
-import 'HomePage.dart';
 
 // ignore: must_be_immutable
 class ExibirCanalPage extends StatefulWidget {
   //static ExibirCanalPage? _instance; //Singleton
 
-  ExibirCanalPage() {}
+  ExibirCanalPage();
   // static ExibirCanalPage? getInstance({required Canal canal}) {
   //   if (_instance == null) {
   //     _instance = ExibirCanalPage._internal();

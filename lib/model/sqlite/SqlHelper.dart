@@ -1,6 +1,5 @@
 //@dart=2.9
 import 'package:iptv/model/sqlite/utils/TabelaAdministrador.dart';
-import 'package:iptv/model/sqlite/utils/TabelaCategoriaXcanais.dart';
 import 'package:iptv/model/sqlite/utils/TabelaCliente.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -8,7 +7,6 @@ import 'package:sqflite/sqflite.dart';
 import 'utils/TabelaCanal.dart';
 import 'utils/TabelaCategoria.dart';
 import 'utils/TabelaLista.dart';
-import 'utils/TabelaUsuario.dart';
 
 //realizar leitura de arquivo txt.
 //import 'SQLUtil.dart';

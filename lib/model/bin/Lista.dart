@@ -1,6 +1,5 @@
-import 'dart:convert';
-import 'dart:io';
 
+import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:iptv/model/bin/Cliente.dart';
 import 'package:iptv/model/sqlite/SqlHelper.dart';
@@ -121,7 +120,7 @@ class Lista {
       List<Categoria>? categorias = await Categoria.carregaCategoria(lista!, listac.id);
       print("TAMANHO CATEGORIA: " + categorias!.length.toString());
       List<dynamic> iall = await Categoria.insertAll(categorias); //lista de id
-      print("FIM LOAD CATEGORIA L: 119 CLASS LISTA");
+      print("FIM LOAD CATEGORIA L: 119 CLASS LISTA:"+iall.length.toString());
 
 
       canais = await Canal.carregaCanais(lista, listac.id);

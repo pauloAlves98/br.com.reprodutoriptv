@@ -134,8 +134,6 @@ class _HomePageState extends State<HomePage> {
       return ListaPage();
     else if (index == 1) 
       return CanaisPage();
-    else if (index == 2) 
-      return ContaPage();
-    
+    return ContaPage();//2
   }
 }

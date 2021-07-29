@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sqflite_manager/flutter_sqflite_manager.dart';
 import 'package:iptv/view/HomePage.dart';
 import 'package:sqflite/sqflite.dart';
-import 'main.dart';
 import 'model/sqlite/SqlHelper.dart';
 
 class SGBDPage extends StatefulWidget {

@@ -8,13 +8,13 @@ import 'package:iptv/view/Splash.dart';
 import 'SGBDPage.dart';
 import 'view/ExibirCanalPage.dart';
 
-String SGBDPAGE = "/SGBDPAGE";
-String HOMEPAGE = "/HOMEPAGE";
-String CADASTROLISTAPAGE = "/CADASTROLISTAPAGE";
-String SPLASHPAGE = "/SPLASH";
-String CANALPAGE = "/CANALPAGE";
-String EXIBIRCANALPAGE = "/ EXIBIRCANALPAGE";
-String LISTAPAGE = "/LISTAPAGE";
+const String SGBDPAGE = "/SGBDPAGE";
+const String HOMEPAGE = "/HOMEPAGE";
+const String CADASTROLISTAPAGE = "/CADASTROLISTAPAGE";
+const String SPLASHPAGE = "/SPLASH";
+const String CANALPAGE = "/CANALPAGE";
+const String EXIBIRCANALPAGE = "/ EXIBIRCANALPAGE";
+const String LISTAPAGE = "/LISTAPAGE";
 
 Map<String, WidgetBuilder> routes = {
   "/": (_) => Splash(),
