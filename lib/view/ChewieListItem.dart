@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:google_fonts/google_fonts.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:video_player/video_player.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:chewie/chewie.dart';
 
 
 // Créditos: https://github.com/ResoCoder
+// ignore: must_be_immutable
 class ChewieListItem extends StatefulWidget {
   // This will contain the URL/asset path which we want to play
   final VideoPlayerController videoPlayerController;
   final bool looping;
-
+  String link;
   ChewieController? chewieController;
 
   ChewieListItem({
     required this.videoPlayerController,
     required this.looping,
+    required this.link,
+    
   });
 
   @override
@@ -43,7 +49,7 @@ class _ChewieListItemState extends State<ChewieListItem> {
       errorBuilder: (context, errorMessage) {
         return Center(
           child: Text(
-            "Canal indisponível!",
+            "Canal indisponível! "+errorMessage.toString(),
             style: GoogleFonts.encodeSans(
                 color: Colors.red, fontWeight: FontWeight.bold),
           ),

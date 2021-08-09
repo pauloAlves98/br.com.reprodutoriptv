@@ -1,10 +1,14 @@
 import 'dart:async';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iptv/model/bin/Lista.dart';
 import 'package:iptv/model/utils/Constantes.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:iptv/model/utils/Corrente.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import '../main.dart';
 import 'ListaPage.dart';
 

@@ -1,8 +1,10 @@
-import 'dart:io';
 
+// ignore: unused_import
 import 'package:iptv/model/bin/Lista.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:iptv/model/sqlite/SqlHelper.dart';
 import 'package:iptv/model/sqlite/utils/TabelaCanal.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:sqflite/sqflite.dart';
 
 import 'Categoria.dart';

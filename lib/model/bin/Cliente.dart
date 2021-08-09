@@ -1,8 +1,10 @@
 import 'package:iptv/model/bin/Usuario.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:iptv/model/sqlite/SqlHelper.dart';
 import 'package:iptv/model/sqlite/utils/Comum.dart';
 import 'package:iptv/model/sqlite/utils/TabelaCliente.dart';
 import 'package:iptv/model/sqlite/utils/TabelaUsuario.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:sqflite/sqflite.dart';
 
 class Cliente extends Usuario{

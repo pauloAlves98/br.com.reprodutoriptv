@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:google_fonts/google_fonts.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:iptv/main.dart';
 import 'package:iptv/model/bin/Canal.dart';
 import 'package:iptv/model/bin/Categoria.dart';
 import 'package:iptv/model/utils/Constantes.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:iptv/model/utils/Corrente.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:optimized_cached_image/widgets.dart';
 
 class CanaisPage extends StatefulWidget {

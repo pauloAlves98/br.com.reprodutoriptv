@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:iptv/main.dart';
 import 'package:iptv/model/bin/Cliente.dart';
 import 'package:iptv/model/bin/Lista.dart';
 import 'package:iptv/model/utils/Constantes.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:iptv/model/utils/Corrente.dart';
 
 class Splash extends StatefulWidget {

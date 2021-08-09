@@ -1,12 +1,13 @@
 
 import 'dart:io';
 import 'package:intl/intl.dart';
-import 'package:iptv/model/bin/Cliente.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:iptv/model/sqlite/SqlHelper.dart';
 import 'package:iptv/model/sqlite/utils/Comum.dart';
 import 'package:iptv/model/sqlite/utils/TabelaCanal.dart';
 import 'package:iptv/model/sqlite/utils/TabelaCategoria.dart';
 import 'package:iptv/model/sqlite/utils/TabelaLista.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:sqflite/sqflite.dart';
 
 import 'Canal.dart';
@@ -89,7 +90,7 @@ class Lista {
             line.trimLeft().substring(0, 4) == "http") {
           //verifica se tem http na proxima linha util:
           if (extinf) {
-            lista.add([temp, line]);
+            lista.add([temp.trimLeft(), line.trimLeft()]);
             temp = "";
             extinf = false;
           }
@@ -116,7 +117,7 @@ class Lista {
     try {
       List? lista = await Lista.carregaLista(caminho);
       listac.id = await listac.insert();
-
+    
       List<Categoria>? categorias = await Categoria.carregaCategoria(lista!, listac.id);
       print("TAMANHO CATEGORIA: " + categorias!.length.toString());
       List<dynamic> iall = await Categoria.insertAll(categorias); //lista de id
@@ -150,7 +151,7 @@ class Lista {
   }
    /// *Retorna todas as listas vinculadas a um cliente.*
   static Future<List<Lista>> getAllCliente(int id) {
-    return Future<List<Lista>>.delayed(Duration(seconds: 1), () async {
+    return Future<List<Lista>>.delayed(Duration(seconds: 0), () async {
       Database dataBase = await SqlHelper().db;
       List listMap =
           await dataBase.rawQuery(TabelaLista.getAllCliente(id));

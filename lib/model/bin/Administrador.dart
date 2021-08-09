@@ -1,6 +1,8 @@
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:iptv/model/sqlite/SqlHelper.dart';
 import 'package:iptv/model/sqlite/utils/TabelaAdministrador.dart';
 import 'package:iptv/model/sqlite/utils/TabelaUsuario.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:sqflite/sqflite.dart';
 
 import 'Usuario.dart';

@@ -1,5 +1,7 @@
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:iptv/model/sqlite/SqlHelper.dart';
 import 'package:iptv/model/sqlite/utils/TabelaCategoria.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:sqflite/sqflite.dart';
 
 class Categoria {
@@ -9,6 +11,7 @@ class Categoria {
   String? _status = "ATIVA";
 
   Categoria();
+  // ignore: non_constant_identifier_names
   Categoria.simples(String nome, int id_lista) {
     this._nome = nome;
     this._idlista = id_lista;

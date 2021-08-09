@@ -26,6 +26,7 @@ Map<String, WidgetBuilder> routes = {
   EXIBIRCANALPAGE: (_) => ExibirCanalPage(),
   LISTAPAGE: (_) => ListaPage(),
 };
+
 void main() {
   runApp(
     MaterialApp(
