@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 //import 'package:iptv/main.dart';
-import 'package:iptv/view/Splash.dart';
+import 'package:iptv/view/pages/Splash.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

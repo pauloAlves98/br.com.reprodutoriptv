@@ -32,6 +32,7 @@ class _ChewieListItemState extends State<ChewieListItem> {
 
   @override
   void initState() {
+    
     super.initState();
     // Wrapper on top of the videoPlayerController
 
@@ -43,15 +44,32 @@ class _ChewieListItemState extends State<ChewieListItem> {
       //autoInitialize: true,
       //allowFullScreen: false,
       looping: false,
+      allowedScreenSleep: false,
+      // allowPlaybackSpeedChanging: true,
 
       // Errors can occur for example when trying to play a video
       // from a non-existent URL
       errorBuilder: (context, errorMessage) {
         return Center(
-          child: Text(
-            "Canal indisponível! "+errorMessage.toString(),
-            style: GoogleFonts.encodeSans(
-                color: Colors.red, fontWeight: FontWeight.bold),
+          child: Column(
+            children: [
+              
+              Center(
+                child: Text(
+                  "Canal indisponível!",
+                  style: GoogleFonts.encodeSans(
+                      color: Colors.red, fontWeight: FontWeight.bold),
+                ),
+              ),
+              Divider(height: 20,),
+              Center(
+                child: Text(
+                  errorMessage.toString(),
+                  style: GoogleFonts.encodeSans(
+                      color: Color.fromARGB(255, 64, 62, 16), fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
           ),
         );
       },
@@ -63,7 +81,7 @@ class _ChewieListItemState extends State<ChewieListItem> {
     return Padding(
       padding: EdgeInsets.all(4.0),
       child: Chewie(
-        controller: _chewieController,
+        controller: _chewieController!,
       ),
     );
   }

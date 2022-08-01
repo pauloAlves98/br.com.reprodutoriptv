@@ -1,9 +1,9 @@
 //@dart=2.9
 import 'package:flutter/material.dart';
 import 'package:flutter_sqflite_manager/flutter_sqflite_manager.dart';
-import 'package:iptv/view/HomePage.dart';
+import 'package:iptv/view/pages/HomePage.dart';
 import 'package:sqflite/sqflite.dart';
-import 'model/sqlite/SqlHelper.dart';
+import '../../model/sqlite/SqlHelper.dart';
 
 class SGBDPage extends StatefulWidget {
   @override
@@ -14,7 +14,7 @@ class _SGBDPageState extends State<SGBDPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Database>(
-      future: SqlHelper().db,
+      future: SqlHelper.instance.db,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return SqfliteManager(

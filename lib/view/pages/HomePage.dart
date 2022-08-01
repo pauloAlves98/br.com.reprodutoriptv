@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iptv/model/utils/Constantes.dart';
-import 'package:iptv/view/CanaisPage.dart';
-import 'package:iptv/view/ListaPage.dart';
+import 'package:iptv/view/pages/CanaisPage.dart';
+import 'package:iptv/view/pages/ListaPage.dart';
 
 import 'ContaPage.dart';
 

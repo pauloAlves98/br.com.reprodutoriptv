@@ -7,9 +7,9 @@ import 'package:iptv/model/utils/Constantes.dart';
 import 'package:iptv/model/utils/Corrente.dart';
 
 // ignore: import_of_legacy_library_into_null_safe
-import '../main.dart';
+import '../../main.dart';
 // ignore: import_of_legacy_library_into_null_safe
-import 'CardLista.dart';
+import '../components/CardLista.dart';
 
 class ListaPage extends StatefulWidget {
   static List<Widget> widgets = [];

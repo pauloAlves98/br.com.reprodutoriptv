@@ -9,7 +9,8 @@ import 'package:iptv/model/utils/Constantes.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:iptv/model/utils/Corrente.dart';
 // ignore: import_of_legacy_library_into_null_safe
-import '../main.dart';
+import '../../main.dart';
+import '../../repository/DTO/ListaDTO.dart';
 import 'ListaPage.dart';
 
 class CadastroListaPage extends StatefulWidget {
@@ -18,6 +19,7 @@ class CadastroListaPage extends StatefulWidget {
 }
 
 class _CadastroListaPageState extends State<CadastroListaPage> {
+
   TextEditingController nomeField = new TextEditingController();
   TextEditingController caminhoField = new TextEditingController();
   //bool autovalidar = false;
@@ -45,11 +47,11 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
             ),
           ),
         ),
-        leading:IconButton(
+        leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new_sharp),
-          onPressed: (){
-             //Navigator.pop(context);
-             Navigator.of(context).pop();
+          onPressed: () {
+            //Navigator.pop(context);
+            Navigator.of(context).pop();
           },
         ),
         actions: [],
@@ -90,9 +92,10 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
                       },
                       Icon(Icons.upload_file, color: AZUL_ALTERNATIVO),
                       () async {
-                        caminhoField.text = await FilePicker.getFilePath(
-                          type: FileType.any,
-                        );
+                        
+                        FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.any);
+                        if (result != null) 
+                          caminhoField.text = result.files.first.path!;
                       },
                       true),
                   Divider(
@@ -134,7 +137,8 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
                                   showAlertDialogLista(context, nomeField.text,
                                       caminhoField.text, 1);
                                 } else
-                                  print("Não Validou o form: Cadastro Lista l:133");
+                                  print(
+                                      "Não Validou o form: Cadastro Lista l:133");
                               },
                             ),
                           ),
@@ -150,6 +154,7 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
       ),
     );
   }
+
   ///Atributos exceto context, são para popular função popularLista de Lista!
   ///**nome**: *nome da lista*
   ///
@@ -160,6 +165,7 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
     //DIALOG EH MUITO BAGUNÇADO EM FLUTTER!
     // configura o  AlertDialog
     //bool suc = false;
+   ListaDTO? listaDTO =  ListaDTO.instance;
     AlertDialog alerta = AlertDialog(
       backgroundColor: AZUL_ESCURO,
       shape: RoundedRectangleBorder(
@@ -178,13 +184,15 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
               Timer(new Duration(seconds: 2), () async {
                 ListaPage.widgets = [];
                 Corrente.listasCorrente =
-                    await Lista.getAllCliente(Corrente.clienteCorrente.id);
+                    await listaDTO?.getAllCliente(Corrente.clienteCorrente?.id);
                 // limparCampos();
                 //Navigator.of(context).pop();
-                Navigator.pushNamedAndRemoveUntil(context, HOMEPAGE, (route) => false);
+                Navigator.pushNamedAndRemoveUntil(
+                    context, HOMEPAGE, (route) => false);
                 //  Navigator.pushReplacementNamed(context, HOMEPAGE);
                 // Navigator.of(context).pop();
               });
+
               return Container(
                 decoration: Constantes.box,
                 child: Center(
@@ -197,14 +205,14 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
               );
             } else if (snapshot.error != null) {
               print("ERRO AO INSERIR LISTA L: 190 - CADASTRO LISTA");
-             
               print(snapshot.error);
-               bool isCanal = snapshot.error!.toString().contains("canal");
-               Timer(new Duration(seconds: 2), () async {
+              bool isCanal = snapshot.error!.toString().contains("canal");
+
+              Timer(new Duration(seconds: 2), () async {
                 ListaPage.widgets = [];
                 Corrente.listasCorrente =
-                    await Lista.getAllCliente(Corrente.clienteCorrente.id);
-             
+                    await listaDTO?.getAllCliente(Corrente.clienteCorrente?.id);
+
                 Navigator.of(context).pop();
                 // Navigator.popAndPushNamed(context, HOMEPAGE);
                 //  Navigator.pushReplacementNamed(context, HOMEPAGE);
@@ -223,6 +231,7 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
                 ),
               );
             } else {
+
               return Center(
                 child: CircularProgressIndicator(),
               );
@@ -248,7 +257,8 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
         // ),
       ],
     );
-    ///Mostrar 
+
+    ///Mostrar
     showDialog(
       barrierDismissible: false,
       context: context,
@@ -260,16 +270,17 @@ class _CadastroListaPageState extends State<CadastroListaPage> {
                 child: FittedBox(child: alerta)));
       },
     );
+
   }
 
   /// **hint**: *texto dentro do input*;
-  /// 
+  ///
   /// **controller**: *controle do input*;
-  /// 
+  ///
   /// **fvalidator**: *função validadora do input para o form*;
-  /// 
+  ///
   /// **icon**: *icone do input*;
-  /// 
+  ///
   /// **iconpressed**: *função ao pressionar icone do input*
   Widget inputform(String hint, TextEditingController controller, fvalidator,
       Icon icon, iconpressed, relyony) {

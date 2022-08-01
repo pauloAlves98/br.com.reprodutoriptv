@@ -12,10 +12,10 @@ import 'utils/TabelaLista.dart';
 //import 'SQLUtil.dart';
 
 class SqlHelper {
+
   static const String NOME_BASE_DADOS = "iptv.db";
-  static final SqlHelper _instance =  SqlHelper._internal();//Singleton
+  static final SqlHelper instance =  SqlHelper._internal();//Singleton
   static String databasecaminho;
-  factory SqlHelper() => _instance;
   
   SqlHelper._internal();
   Database _db;
@@ -29,7 +29,7 @@ class SqlHelper {
   Future<Database> initDd() async {
     final databasePath = await getDatabasesPath();
     final path = join(databasePath, NOME_BASE_DADOS);
-    print("Caminho Db "+ path.toString());
+    //print("Caminho Db "+ path.toString());
     databasecaminho = path;
     return await openDatabase(path,
         version: 1, onCreate: create, onUpgrade: update);

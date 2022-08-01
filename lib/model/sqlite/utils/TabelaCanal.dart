@@ -2,7 +2,7 @@ import 'package:iptv/model/sqlite/utils/TabelaCategoria.dart';
 
 import 'TabelaLista.dart';
 
-class TabelaCanal{
+class TabelaCanal {
   static const String NOME_TABELA = "canal";
   static const String COL_ID = "id";
   static const String COL_NOME = "nome";
@@ -24,6 +24,7 @@ class TabelaCanal{
    "FOREIGN KEY($COL_CATEGORIA) REFERENCES "+ TabelaCategoria.NOME_TABELA+"("+TabelaCategoria.COL_ID+"));";
 
   static String getCountCanaisPorLista(int idlista) {
+
     String id = idlista.toString();
     return "SELECT count($COL_ID) FROM $NOME_TABELA where $COL_LISTA = $id";
   }
@@ -34,7 +35,8 @@ class TabelaCanal{
   static String removeAllLista(int idlista) {
     return "DELETE FROM $NOME_TABELA where $COL_LISTA='$idlista'";
   }
-   static String getAllCategoria(int idcat) {
+  
+  static String getAllCategoria(int idcat) {
     String auxid = idcat.toString();
     return "SELECT * FROM $NOME_TABELA where $COL_CATEGORIA='$auxid'";
   }

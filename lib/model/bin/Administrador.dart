@@ -1,8 +1,10 @@
+// ignore: duplicate_ignore
 // ignore: import_of_legacy_library_into_null_safe
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'package:iptv/model/sqlite/SqlHelper.dart';
 import 'package:iptv/model/sqlite/utils/TabelaAdministrador.dart';
 import 'package:iptv/model/sqlite/utils/TabelaUsuario.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:sqflite/sqflite.dart';
 
 import 'Usuario.dart';
@@ -41,25 +43,8 @@ class Administrador extends Usuario{
     };
     return map;
   }
-
-
+  
   int get superuser => this._superuser;
   set superuser(int value) => this._superuser = value;
   
-
-
-//metodos de acesso ao bd.
- Future insert() async {
-    Database dataBase = await SqlHelper().db;
-    //insere adm tbm e pega o retorno. se 0 ou null. já existe.
-    int valor = 0;
-    try{
-      valor = await dataBase.insert(TabelaAdministrador.NOME_TABELA, toMap());
-      print("ID ADM: "+valor.toString());
-    }catch(ex){
-       print('Failed to insert: ' + ex.toString());
-    }
-   
-    return valor;
-  }
 }

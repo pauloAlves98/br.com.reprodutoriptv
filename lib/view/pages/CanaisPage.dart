@@ -8,8 +8,11 @@ import 'package:iptv/model/bin/Categoria.dart';
 import 'package:iptv/model/utils/Constantes.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:iptv/model/utils/Corrente.dart';
+import 'package:iptv/repository/DTO/CanalDTO.dart';
 // ignore: import_of_legacy_library_into_null_safe
-import 'package:optimized_cached_image/widgets.dart';
+import 'package:optimized_cached_image/optimized_cached_image.dart';
+// ignore: import_of_legacy_library_into_null_safe
+
 
 class CanaisPage extends StatefulWidget {
   CanaisPage();
@@ -19,6 +22,7 @@ class CanaisPage extends StatefulWidget {
 
 class _CanaisPageState extends State<CanaisPage> {
   bool issearch = false;
+  CanalDTO? canalDTO =  CanalDTO.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -139,10 +143,11 @@ class _CanaisPageState extends State<CanaisPage> {
   ///Constrói os canais abaixo do nome da categoria! Estilo AmazonPrime!
   Future<Widget> builderAllCanais(context, Categoria categoria) async {
     List<Widget> filhos = [];
-    List<Canal> canais = await Canal.getAllCategoria(categoria.id);
+  
+    List<Canal>? canais = await canalDTO?.getAllCategoria(categoria.id);
     print("Canais:");
-    print(canais.length.toString());
-    for (Canal can in canais) {
+    print(canais?.length.toString());
+    for (Canal can in canais!) {
       //print(can.nome);
       filhos.add(builderCardCanal(context, can));
     }

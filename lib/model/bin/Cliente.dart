@@ -57,7 +57,6 @@ class Cliente extends Usuario{
     this._adm = idadm;
   }
     
-  
   //Cliente();
   //getters e setters
   String? get dataVencimento => this._dataVencimento;
@@ -65,36 +64,5 @@ class Cliente extends Usuario{
 
   int? get adm => this._adm;
   set adm(int? value) => this._adm = value; 
-
-
-  //metodos de acesso ao bd.
-  Future insert() async {
-    Database dataBase = await SqlHelper().db;
-    //insere adm tbm e pega o retorno. se 0 ou null. já existe.
-    int valor = 0;
-    try{
-      valor = await dataBase.insert(TabelaCliente.NOME_TABELA, toMap());
-      print("ID Cliente: "+valor.toString());
-    }catch(ex){
-       print('Failed to insert: ' + ex.toString());
-       throw Exception("Class Cliente L:79 "+ex.toString());
-    }
-    return valor;
-  }
-    /// *Retorna todos os clientes.*
-    static Future<List<Cliente>> getAll() {
-    return Future<List<Cliente>>.delayed(Duration(seconds: 1), () async {
-      Database dataBase = await SqlHelper().db;
-      List listMap =
-          await dataBase.rawQuery(Comum.getAll(TabelaCliente.NOME_TABELA));
-      List<Cliente> listas = [];
-      for (Map m in listMap) {
-        listas.add(Cliente.fromMapSqLite(m));
-       // print(Cliente.fromMapSqLite(m).nome);
-       // print(Cliente.fromMapSqLite(m).id.toString());
-      }
-      return listas;
-    });
-  }
 
 }

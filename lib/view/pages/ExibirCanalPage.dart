@@ -8,7 +8,7 @@ import 'package:iptv/model/utils/Corrente.dart';
 import 'package:video_player/video_player.dart';
 //import 'package:yoyo_player/yoyo_player.dart';
 
-import 'ChewieListItem.dart';
+import '../components/ChewieListItem.dart';
 
 // ignore: must_be_immutable
 class ExibirCanalPage extends StatefulWidget {

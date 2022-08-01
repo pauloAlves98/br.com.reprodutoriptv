@@ -4,9 +4,11 @@ import 'package:iptv/model/bin/Lista.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:iptv/model/sqlite/SqlHelper.dart';
 import 'package:iptv/model/sqlite/utils/TabelaCanal.dart';
+import 'package:iptv/repository/DTO/CategoriaDTO.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:sqflite/sqflite.dart';
 
+import '../utils/Constantes.dart';
 import 'Categoria.dart';
 
 class Canal {
@@ -32,7 +34,7 @@ class Canal {
     this._idcategoria = idcategoria;
   }
 
-  static const String SEM_LOGO = "SEM_LOGO";
+ 
   //metodos de conversão
   Canal.fromMapSqLite(Map map) {
     _id = map[TabelaCanal.COL_ID];
@@ -87,6 +89,7 @@ class Canal {
       List<dynamic> lista, int idlista) async {
     //lista vinda do metodo carrega lista de Lista.
     //lançar exceçoe personalizadas
+    CategoriaDTO? categoriaDTO = CategoriaDTO.instance;
     List<Canal> canais = [];
     print("PROCESSANDO CANAIS!");
     try {
@@ -103,7 +106,6 @@ class Canal {
         String linkLogo = SEM_LOGO;
         String linkVideo = http;
         int? idcategoria;
-
         String categoria = Categoria.SEM_CATEGORIA;
 
         if (extinf.contains('tvg-logo')) {
@@ -122,11 +124,12 @@ class Canal {
           categoria = grupo;
         }
         //consultar categoria;
-        List<Categoria> c = await Categoria.getAllPorNome(categoria, idlista);
-        if (c.length <= 0)
-          idcategoria = await Categoria.simples(categoria, idlista).insert();
+        List<Categoria>? c = await categoriaDTO?.getAllPorNome(categoria, idlista);
+        
+        if (c!= null && c.length <= 0)//se nao exisitir insere
+          idcategoria = await categoriaDTO?.insert(Categoria.simples(categoria, idlista));
         else
-          idcategoria = c[0].id;
+          idcategoria = c![0].id;
 
         //print("Video: "+linkVideo);
         canais.add(new Canal.parcial(nome, linkLogo, linkVideo, idcategoria!));
@@ -138,46 +141,5 @@ class Canal {
     print(
         "Saiu Processo Canais l:126"); //printa primeiro, pois metodos async eh pulado.
     return canais;
-  }
-
-  //metodos de acesso ao bd.
-  Future insert() async {
-    Database dataBase = await SqlHelper().db;
-    int valor = await dataBase.insert(TabelaCanal.NOME_TABELA, toMap());
-    //print("Canal $nome ID: " + valor.toString());
-    //print("Link video");
-    //print(linkVideo);
-    return valor;
-  }
-
-  /// *Retorna o número de canais vinculados a uma lista.*
-  static Future<int> getCountCanaisPorLista(int idlista) {
-    return Future<int>.delayed(Duration(seconds: 0), () async {
-      Database dataBase = await SqlHelper().db;
-      List listMap =
-          await dataBase.rawQuery(TabelaCanal.getCountCanaisPorLista(idlista));
-      int total = 0;
-      // print("Contando Canais em Canal.dart L: 145");
-      for (Map m in listMap) {
-        //print(m.keys);
-        total = m['count(id)'] != null ? m['count(id)'] : 0;
-        // pagamentos.add(Pagamento.fromMapSqLite(m));
-      }
-      print("Total de Canais em Canal.dart L: 151:" + total.toString());
-      return total;
-    });
-  }
-
-   /// *Retorna todos os canais vinculados a uma categoria.*
-  static Future<List<Canal>> getAllCategoria(int? idcat) async {
-    //close no banco
-    Database dataBase = await SqlHelper().db;
-    List listMap = await dataBase.rawQuery(TabelaCanal.getAllCategoria(idcat!));
-    print("ID de busca categoria: " + idcat.toString());
-    List<Canal> categorias = [];
-    for (Map m in listMap) {
-      categorias.add(Canal.fromMapSqLite(m));
-    }
-    return categorias;
   }
 }

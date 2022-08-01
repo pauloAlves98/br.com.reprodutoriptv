@@ -52,8 +52,8 @@ class Categoria {
     try {
       lista.forEach((line) {
         String aux = line[0].toString();
-        if (aux.trimLeft().contains('group-title')) {
-          RegExp regexgrupo = RegExp(r'group-title[\s]*[=][\s]*"[^"]*"'); //"^ SIGNIFICA QQ CARACTERE!"
+        if (aux.trimLeft().contains('group-title')) {//contem uma categoria
+          RegExp regexgrupo = RegExp(r'group-title[\s]*[=][\s]*"[^"]*"'); //pega tudo e para em uma aspas duplas - "^ SIGNIFICA QQ CARACTERE!"
           String grupo = regexgrupo.stringMatch(aux).toString();
           grupo = grupo.replaceAll(RegExp(r'group-title[\s]*[=][\s]*'), '');
           grupo = grupo.replaceAll('"', "").trimLeft();
@@ -80,68 +80,8 @@ class Categoria {
   }
 
   //metodos de acesso ao bd.
-  Future insert() async {
-    Database dataBase = await SqlHelper().db;
-    int valor = await dataBase.insert(TabelaCategoria.NOME_TABELA, toMap());
-    print("Categoria $nome ID: " + valor.toString());
-    return valor;
-  }
+  
 
-  /// *Insere várias categorias de uma única vez. Utiliza inserção em Lotes.*
-  static Future<List<dynamic>> insertAll(List<Categoria> categorias) async {
-    Database dataBase = await SqlHelper().db;
-    return await dataBase.transaction((txn) async {
-      var batch = txn.batch();
-      categorias.forEach((element) {
-        batch.insert(TabelaCategoria.NOME_TABELA, element.toMap());
-      });
-      return await batch.commit();
-    });
-  }
 
-  /// *Retorna todas as categorias com o nome destacado no parâmetro.*
-  static Future<List<Categoria>> getAllPorNome(String nome, int idlista) async {
-    //close no banco
-    Database dataBase = await SqlHelper().db;
-    List listMap =
-        await dataBase.rawQuery(TabelaCategoria.getAllPorNome(nome, idlista));
-    List<Categoria> categorias = [];
-    for (Map m in listMap) {
-      categorias.add(Categoria.fromMapSqLite(m));
-    }
-    return categorias;
-  }
-  /// *Retorna todas as categorias vinculadas a uma lista.*
-  static Future<List<Categoria>> getAllLista(int idlista) async {
-    //close no banco
-    Database dataBase = await SqlHelper().db;
-    List listMap =
-        await dataBase.rawQuery(TabelaCategoria.getAllLista(idlista));
-    List<Categoria> categorias = [];
-    for (Map m in listMap) {
-      categorias.add(Categoria.fromMapSqLite(m));
-    }
-    return categorias;
-  }
 
-  /// *Retorna o número de categorias vinculadas a uma lista.*
-  static Future<int> getCountCategoriasPorLista(int idlista) {
-    return Future<int>.delayed(Duration(seconds: 0), () async {
-      Database dataBase = await SqlHelper().db;
-      List listMap = await dataBase
-          .rawQuery(TabelaCategoria.getCountCategoriasPorLista(idlista));
-      int total = 0;
-      String tbcat = TabelaCategoria.COL_ID;
-      for (Map m in listMap) {
-        //pra ler o map.
-        //print(m.keys);
-        total = m['count(DISTINCT $tbcat)'] != null
-            ? m['count(DISTINCT $tbcat)']
-            : 0;
-        // pagamentos.add(Pagamento.fromMapSqLite(m));
-      }
-      print("Total de Categorias:" + total.toString());
-      return total;
-    });
-  }
 }
