@@ -6,7 +6,6 @@ import 'package:video_player/video_player.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:chewie/chewie.dart';
 
-
 // Créditos: https://github.com/ResoCoder
 // ignore: must_be_immutable
 class ChewieListItem extends StatefulWidget {
@@ -20,7 +19,6 @@ class ChewieListItem extends StatefulWidget {
     required this.videoPlayerController,
     required this.looping,
     required this.link,
-    
   });
 
   @override
@@ -32,13 +30,12 @@ class _ChewieListItemState extends State<ChewieListItem> {
 
   @override
   void initState() {
-    
     super.initState();
     // Wrapper on top of the videoPlayerController
 
     _chewieController = ChewieController(
       videoPlayerController: widget.videoPlayerController,
-      aspectRatio:16/9,
+      aspectRatio: 16 / 9,
       // Prepare the video to be played and display the first frame
       autoPlay: true,
       //autoInitialize: true,
@@ -50,10 +47,10 @@ class _ChewieListItemState extends State<ChewieListItem> {
       // Errors can occur for example when trying to play a video
       // from a non-existent URL
       errorBuilder: (context, errorMessage) {
-        return Center(
+        return Container(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              
               Center(
                 child: Text(
                   "Canal indisponível!",
@@ -61,12 +58,19 @@ class _ChewieListItemState extends State<ChewieListItem> {
                       color: Colors.red, fontWeight: FontWeight.bold),
                 ),
               ),
-              Divider(height: 20,),
+              Divider(
+                height: 20,
+              ),
               Center(
-                child: Text(
-                  errorMessage.toString(),
-                  style: GoogleFonts.encodeSans(
-                      color: Color.fromARGB(255, 64, 62, 16), fontWeight: FontWeight.bold),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    errorMessage.toString(),
+                    textAlign:TextAlign.center,
+                    style: GoogleFonts.encodeSans(
+                        color: Color.fromARGB(255, 64, 62, 16),
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
             ],
@@ -91,8 +95,7 @@ class _ChewieListItemState extends State<ChewieListItem> {
     super.dispose();
     // IMPORTANT to dispose of all the used resources
     widget.videoPlayerController.dispose();
-    if(_chewieController!.isPlaying)
-     _chewieController!.pause();
-     _chewieController!.dispose();
+    if (_chewieController!.isPlaying) _chewieController!.pause();
+    _chewieController!.dispose();
   }
 }

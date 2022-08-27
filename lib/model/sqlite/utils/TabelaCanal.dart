@@ -40,5 +40,9 @@ class TabelaCanal {
     String auxid = idcat.toString();
     return "SELECT * FROM $NOME_TABELA where $COL_CATEGORIA='$auxid'";
   }
+  static String getAllLista(int idList) {
+    String auxid = idList.toString();
+    return "SELECT * FROM $NOME_TABELA where $COL_LISTA='$auxid'";
+  }
 
 }

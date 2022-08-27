@@ -1,3 +1,6 @@
+flutter run --release
+flutter build apk --no-shrink
+flutter build apk --release
 
 ENTIDADES E RELACIONAMENTOS
 

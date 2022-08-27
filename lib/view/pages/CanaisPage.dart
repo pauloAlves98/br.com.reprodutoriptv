@@ -13,7 +13,6 @@ import 'package:iptv/repository/DTO/CanalDTO.dart';
 import 'package:optimized_cached_image/optimized_cached_image.dart';
 // ignore: import_of_legacy_library_into_null_safe
 
-
 class CanaisPage extends StatefulWidget {
   CanaisPage();
   @override
@@ -22,7 +21,7 @@ class CanaisPage extends StatefulWidget {
 
 class _CanaisPageState extends State<CanaisPage> {
   bool issearch = false;
-  CanalDTO? canalDTO =  CanalDTO.instance;
+  CanalDTO? canalDTO = CanalDTO.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +51,7 @@ class _CanaisPageState extends State<CanaisPage> {
       children: filhos,
     );
   }
+
   /// Renderiza as informações das Categorias e do canal dentro do header de categoria!
   Widget builderCardCategoria(Categoria categoria) {
     return Container(
@@ -111,7 +111,8 @@ class _CanaisPageState extends State<CanaisPage> {
 
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return snapshot.data as Widget; // retorna lista de canais para esta categoria!
+                    return snapshot.data
+                        as Widget; // retorna lista de canais para esta categoria!
                   } else if (snapshot.error != null) {
                     print("ERRO - FutureBuilder - CanaisPage L:109");
                     print(snapshot.error);
@@ -127,9 +128,12 @@ class _CanaisPageState extends State<CanaisPage> {
                     );
                   } else {
                     return Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(24.0),
                       child: Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.red,
+                        ),
                       ),
                     );
                   }
@@ -143,7 +147,7 @@ class _CanaisPageState extends State<CanaisPage> {
   ///Constrói os canais abaixo do nome da categoria! Estilo AmazonPrime!
   Future<Widget> builderAllCanais(context, Categoria categoria) async {
     List<Widget> filhos = [];
-  
+
     List<Canal>? canais = await canalDTO?.getAllCategoria(categoria.id);
     print("Canais:");
     print(canais?.length.toString());
@@ -158,105 +162,113 @@ class _CanaisPageState extends State<CanaisPage> {
     );
   }
 
-  
   /// Método auxiliar de builderAllCanais! Executa a construção individual do componente de canal!
-  /// 
+  ///
   /// O  Corrente.canalCorrente é atualizado ao clicar no player executar!
   Widget builderCardCanal(context, Canal canal) {
     return Padding(
       padding: const EdgeInsets.all(2.0),
-      child: Container(
-        width: 200,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          // image: DecorationImage(
-          //   fit: BoxFit.fill,
-          //   colorFilter: new ColorFilter.mode(
-          //       Color.fromRGBO(0, 0, 0, 0.8), BlendMode.srcOver),
-          //   image: Constantes.USER_ASSET,
-          // ),
-        ),
-        child: OptimizedCacheImage(
-          imageUrl: canal.linkLogo,
-          imageBuilder: (context, imageProvider) => Container( //se tiver tudo ok no carregamento!
-            width: 200,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                colorFilter: new ColorFilter.mode(
-                    Color.fromRGBO(0, 0, 0, 0.8), BlendMode.srcOver),
-                image: imageProvider,
-              ),
-            ),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: ListTile(
-                focusColor: Colors.black,
-                title: Text(
-                  canal.nome.length > 20
-                      ? canal.nome.substring(0, 20)
-                      : canal.nome, 
-                  style: TextStyle(color: Colors.white),
+      child: GestureDetector(
+        onTap: () {
+          Corrente.canalCorrente = canal;
+          Navigator.pushNamed(context, EXIBIRCANALPAGE);
+          //dispose();
+        },
+        child: Container(
+          width: 200,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            // image: DecorationImage(
+            //   fit: BoxFit.fill,
+            //   colorFilter: new ColorFilter.mode(
+            //       Color.fromRGBO(0, 0, 0, 0.8), BlendMode.srcOver),
+            //   image: Constantes.USER_ASSET,
+            // ),
+          ),
+          child: OptimizedCacheImage(
+            imageUrl: canal.linkLogo,
+            imageBuilder: (context, imageProvider) => Container(
+              //se tiver tudo ok no carregamento!
+              width: 200,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  colorFilter: new ColorFilter.mode(
+                      Color.fromRGBO(0, 0, 0, 0.8), BlendMode.srcOver),
+                  image: imageProvider,
                 ),
-                // subtitle: Text(
-                //   "test",
-                //   overflow: TextOverflow.ellipsis,
-                // ),
-                leading: CircleAvatar(
-                  child: Tooltip(
-                    message: "Executar",
-                    child: IconButton(
-                      icon: Icon(Icons.play_arrow_outlined),
-                      onPressed: () {
-                        Corrente.canalCorrente = canal;
-                        Navigator.pushNamed(
-                            context, EXIBIRCANALPAGE);
-                        //dispose();
-                      },
+              ),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: ListTile(
+                  focusColor: Colors.black,
+                  title: Text(
+                    canal.nome.length > 20
+                        ? canal.nome.substring(0, 20)
+                        : canal.nome,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  // subtitle: Text(
+                  //   "test",
+                  //   overflow: TextOverflow.ellipsis,
+                  // ),
+                  leading: CircleAvatar(
+                    child: Tooltip(
+                      message: "Executar",
+                      child: IconButton(
+                        icon: Icon(Icons.play_arrow_outlined),
+                        onPressed: () {
+                          Corrente.canalCorrente = canal;
+                          Navigator.pushNamed(context, EXIBIRCANALPAGE);
+                          //dispose();
+                        },
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-          placeholder: (context, url) => CircularProgressIndicator(),
-          //caso não carregue a imagem!
-          errorWidget: (context, url, error) => Container(
-            width: 200,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                colorFilter: new ColorFilter.mode(
-                    Color.fromRGBO(0, 0, 0, 0.8), BlendMode.srcOver),
-                image: Constantes.NOT_FOUND_IMAGE, 
-              ),
-            ),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: ListTile(
-                focusColor: Colors.black,
-                title: Text(
-                  canal.nome.length > 20
-                      ? canal.nome.substring(0, 20)
-                      : canal.nome, //separar por catgoria e listar na tela.
-                  style: TextStyle(color: Colors.white),
+            placeholder: (context, url) => Center(
+                child: CircularProgressIndicator(
+              strokeWidth: 2,
+            )),
+            //caso não carregue a imagem!
+            errorWidget: (context, url, error) => Container(
+              width: 200,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  colorFilter: new ColorFilter.mode(
+                      Color.fromRGBO(0, 0, 0, 0.8), BlendMode.srcOver),
+                  image: Constantes.NOT_FOUND_IMAGE,
                 ),
-                // subtitle: Text(
-                //   "test",
-                //   overflow: TextOverflow.ellipsis,
-                // ),
-                leading: CircleAvatar(
-                  child: Tooltip(
-                    message: "Executar",
-                    child: IconButton(
-                      icon: Icon(Icons.play_arrow_outlined),
-                      onPressed: () {
-                        Corrente.canalCorrente = canal;
-                        Navigator.pushNamed(
-                            context, EXIBIRCANALPAGE);
-                      },
+              ),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: ListTile(
+                  focusColor: Colors.black,
+                  title: Text(
+                    canal.nome.length > 20
+                        ? canal.nome.substring(0, 20)
+                        : canal.nome, //separar por catgoria e listar na tela.
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  // subtitle: Text(
+                  //   "test",
+                  //   overflow: TextOverflow.ellipsis,
+                  // ),
+                  leading: CircleAvatar(
+                    child: Tooltip(
+                      message: "Executar",
+                      child: IconButton(
+                        icon: Icon(Icons.play_arrow_outlined),
+                        onPressed: () {
+                          Corrente.canalCorrente = canal;
+                          Navigator.pushNamed(context, EXIBIRCANALPAGE);
+                        },
+                      ),
                     ),
                   ),
                 ),

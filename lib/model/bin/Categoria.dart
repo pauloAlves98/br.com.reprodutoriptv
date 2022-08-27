@@ -59,7 +59,7 @@ class Categoria {
           grupo = grupo.replaceAll('"', "").trimLeft();
           grupo = grupo.length <= 0 ? SEM_CATEGORIA : grupo;
           if (!auxCategorias.contains(grupo)) {
-            //SE A CATEGORIA NAO EXISTIR NA LISTA
+            //SE A CATEGORIA EXISTIR NA LISTA
             auxCategorias.add(grupo);
             categorias.add(new Categoria.simples(grupo, idlista));
           }

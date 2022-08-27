@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iptv/model/utils/Constantes.dart';
 import 'package:iptv/view/pages/CanaisPage.dart';
 import 'package:iptv/view/pages/ListaPage.dart';
-
 import 'ContaPage.dart';
+import 'PesquisaPage.dart';
 
 class HomePage extends StatefulWidget {
   static int cIndex = 0;
@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   TextEditingController tituloController = new TextEditingController();
   _HomePageState() {
-    tituloController.text = "IPTV canais V.1";
+    tituloController.text = "IPTV canais V.1.1";
   }
   @override
   Widget build(BuildContext context) {
@@ -89,6 +89,14 @@ class _HomePageState extends State<HomePage> {
                 backgroundColor: Color(0xFF041830),
                 child: Icon(Icons.tv, color: Colors.white)),
           ),
+           BottomNavigationBarItem(
+            backgroundColor: Colors.black,
+            icon: Icon(Icons.search_rounded, color: Color(0xFF232c47)),
+            label: 'Pesquisa',
+            activeIcon: CircleAvatar( //Quando está selecionado!
+                backgroundColor: Color(0xFF041830),
+                child: Icon(Icons.search_rounded, color: Colors.white)),
+          ),
           BottomNavigationBarItem(
             backgroundColor: Colors.black,
             icon: Icon(Icons.person, color: Color(0xFF232c47)),
@@ -134,6 +142,9 @@ class _HomePageState extends State<HomePage> {
       return ListaPage();
     else if (index == 1) 
       return CanaisPage();
+    else if (index == 2) 
+      return PesquisaPage();
     return ContaPage();//2
+    
   }
 }

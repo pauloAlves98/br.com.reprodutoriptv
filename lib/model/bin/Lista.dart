@@ -73,8 +73,7 @@ class Lista {
   //metodos de conversão
 
   static Future<List<dynamic>?> carregaLista(
-      String
-          caminho //extrai um vetor de listas [[info, http]]    String caminho,
+      String caminho //extrai um vetor de listas [[info, http]]    String caminho,
       ) async {
     //extrai linhas do arquivo da lista
     List lista = [];
@@ -97,6 +96,7 @@ class Lista {
             lista.add([temp.trimLeft(), line.trimLeft()]);
             temp = "";
             extinf = false;
+            //Ja da pra inserir categorias aqui! Uma a Uma!"" Montar vetor categorias!
           }
         }
       });
@@ -127,14 +127,18 @@ class Lista {
 
       List? lista = await Lista.carregaLista(caminho);
       listac.id = await listaDTO!.insert(listac);
-      List<Categoria>? categorias =
-          await Categoria.carregaCategoria(lista!, listac.id);
-      print("TAMANHO CATEGORIA: " + categorias!.length.toString());
-      List? iall = await categoriaDTO!
-          .insertAll(categorias); //lista de id isso tem q sair!
-      print("FIM LOAD CATEGORIA L: 119 CLASS LISTA:" + iall.length.toString());
 
-      canais = await Canal.carregaCanais(lista, listac.id);
+      // List<Categoria>? categorias =
+      //     await Categoria.carregaCategoria(lista!, listac.id);
+      // print("TAMANHO CATEGORIA: " + categorias!.length.toString());
+      // List? iall = await categoriaDTO!
+      //     .insertAll(categorias); //lista de id isso tem q sair!
+      // print("FIM LOAD CATEGORIA L: 119 CLASS LISTA:" + iall.length.toString());
+
+      //Categorias são inseridas no momento dos canais!
+
+      //Inserir Canais tudo em uma mesma função, pois irá reduzir um for!
+      canais = await Canal.carregaCanais(lista!, listac.id);
       print("Load Canais:");
       print(canais!.length);
 

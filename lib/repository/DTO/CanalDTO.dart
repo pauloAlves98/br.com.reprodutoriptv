@@ -68,4 +68,20 @@ class CanalDTO implements ICanal {
     //print(linkVideo);
   }
 
+  @override
+  Future<List<Canal>> getAllLista(int? idList) async {
+    // TODO: implement getAllLista
+    Database dataBase = await SqlHelper.instance.db;
+    List listMap = await dataBase.rawQuery(TabelaCanal.getAllLista(idList!));
+
+    print("ID de busca categoria: " + idList.toString());
+    List<Canal> canais = [];
+   // List<Canal> categorias2 = [];
+   // categorias2 = listMap.map((e) => Canal.fromMapSqLite(e)).toList(); // Maneira mais rápida!
+    for (Map m in listMap) {
+      canais.add(Canal.fromMapSqLite(m));
+    }
+    return canais;
+  }
+
 }

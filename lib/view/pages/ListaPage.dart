@@ -111,27 +111,32 @@ class _ListaPageState extends State<ListaPage> {
                               ),
                             );
                           } else {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Center(
-                                child: CircularProgressIndicator(),
+                            return Container(
+                              height: MediaQuery.of(context).size.height-200,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 50, left: 4, right: 4),
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
                               ),
                             );
                           }
                         })
-                    : Container(
-                      height: MediaQuery.of(context).size.height-200,
-                      child: Padding(
-                          padding:
-                              const EdgeInsets.only(top: 50, left: 4, right: 4),
-                          child: Align(
-                            child: Text("Nenhuma lista encontrada!",
-                                style: GoogleFonts.oswald(
-                                  color: AZUL_ALTERNATIVO,
-                                  fontSize: 23,
-                                )),
+                    : Center(
+                      child: Container(
+                        height: MediaQuery.of(context).size.height-200,
+                        child: Padding(
+                            padding:
+                                const EdgeInsets.only(top: 50, left: 4, right: 4),
+                            child: Align(
+                              child: Text("Nenhuma lista encontrada!",
+                                  style: GoogleFonts.oswald(
+                                    color: AZUL_ALTERNATIVO,
+                                    fontSize: 23,
+                                  )),
+                            ),
                           ),
-                        ),
+                      ),
                     ),
               ),
             ],

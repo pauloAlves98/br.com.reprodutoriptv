@@ -21,7 +21,7 @@ import '../pages/ListaPage.dart';
 /// Cria uma lista com seus dados
 /// O   Corrente.listasCorrente é atualizado quando uma lista é excluida!
 Future<Widget> builderCardLista(context, Lista lista) async {
-
+  
   CanalDTO canalDTO =  CanalDTO.instance;
   CategoriaDTO categoriaDTO = CategoriaDTO.instance;
   ListaDTO listaDTO = ListaDTO.instance;
@@ -111,6 +111,7 @@ Future<Widget> builderCardLista(context, Lista lista) async {
                           style: TextStyle(color: AZUL_ALTERNATIVO)),
                       onPressed: () {
                         print("Carregar Canais - Card Lista Item!");
+                        Corrente.listaCorrente = lista;
                         showAlertDialogCarregarLista(
                             context, categoriaDTO.getAllLista(lista.id));
                       },
@@ -148,6 +149,7 @@ Future<Widget> builderCardLista(context, Lista lista) async {
                         Corrente.listasCorrente = await listaDTO.getAllCliente(
                             Corrente.clienteCorrente.id);
                         HomePage.cIndex = 0;
+                        Corrente.listaCorrente = null;
                         Navigator.pushReplacementNamed(context,
                             HOMEPAGE); //atualiza a pagina! falta listar canais por categoria e executar player.
                       },
@@ -223,6 +225,7 @@ showAlertDialogCarregarLista(BuildContext context, futures) {
 
               ///POP PARA TIRAR ALERT DA TELA
               HomePage.cIndex = 1;
+              
               Navigator.pushReplacementNamed(context, HOMEPAGE);
             });
             return Container(

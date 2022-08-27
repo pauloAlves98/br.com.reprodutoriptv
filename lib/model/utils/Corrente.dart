@@ -9,7 +9,7 @@ class Corrente{
   static Canal canalCorrente;
   static List<Lista> listasCorrente;
   static List<Categoria> categoriasCorrente;
-  static Lista listaCorrente;
+  static Lista listaCorrente = null;
 
   //criar getters e setters
 }
