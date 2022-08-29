@@ -2,7 +2,7 @@
 import '../../model/bin/Canal.dart';
 
 abstract class ICanal {
-
+  Future <List<Canal>>  getCanaisPorParametro(int idlista, String param);
   Future insert(Canal canal);
   /// *Retorna o número de canais vinculados a uma lista.*
   Future<int> getCountCanaisPorLista(int idlista);

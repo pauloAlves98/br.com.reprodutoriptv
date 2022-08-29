@@ -17,14 +17,14 @@ class _PesquisaPageState extends State<PesquisaPage> {
   String searchString = "";
   CanalDTO? canalDTO = CanalDTO.instance;
   TextEditingController searchControl = TextEditingController();
-  late Future<List<Canal>> shows;
+  // late Future<List<Canal>> shows;
   @override
   void initState() {
     super.initState();
     //Caso Alguma Lista Esteja Carregada!
-    shows = (Corrente.listaCorrente != null
-        ? canalDTO?.getAllLista(Corrente.listaCorrente.id)
-        : canalDTO?.getAllLista(-100))!;
+    // shows = (Corrente.listaCorrente != null
+    //     ? canalDTO?.getAllLista(Corrente.listaCorrente.id)
+    //     : canalDTO?.getAllLista(-100))!;
   }
 
   @override
@@ -58,119 +58,124 @@ class _PesquisaPageState extends State<PesquisaPage> {
                 )),
             onSubmitted: (value) {
               setState(() {
-                searchString = value;
+                searchString = value.toLowerCase();
               });
             },
           ),
         ),
         SizedBox(height: 2),
         Expanded(
-            child: Corrente.listaCorrente != null
-                ? FutureBuilder(
-                    future: shows,
-                    builder: (context, AsyncSnapshot<List<Canal>> snapshot) {
-                      if (snapshot.hasData) {
-                        return Center(
-                          child: ListView.separated(
-                            padding: const EdgeInsets.all(8),
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              
-                              return snapshot.data![index].nome
-                                      .toLowerCase()
-                                      .contains(searchString)
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        decoration: new BoxDecoration(
-                                          borderRadius:
-                                              new BorderRadius.circular(16.0),
-                                          color: Color.fromARGB(60, 0, 0, 0),
-                                        ),
-                                        child: ListTile(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(25)),
-                                          leading: CircleAvatar(
-                                            child: Tooltip(
-                                              message: "Executar",
-                                              child: IconButton(
-                                                icon: Icon(
-                                                    Icons.play_arrow_outlined),
-                                                onPressed: () {
-                                                  Corrente.canalCorrente =
-                                                      snapshot.data![index]
-                                                          as Canal;
-                                                  Navigator.pushNamed(
-                                                      context, EXIBIRCANALPAGE);
-                                                },
-                                              ),
-                                            ),
-                                          ),
-
-                                          title: Container(
-                                            child: GestureDetector(
-                                              onTap: () {
+          child: Corrente.listaCorrente != null
+              ? FutureBuilder(
+                  future:  (Corrente.listaCorrente != null
+                          ? canalDTO?.getCanaisPorParametro(
+                              Corrente.listaCorrente.id, searchString)
+                          : canalDTO?.getCanaisPorParametro(
+                              -10, searchString))!,
+                  builder: (context, AsyncSnapshot<List<Canal>> snapshot) {
+                    if (snapshot.hasData) {
+                      return snapshot.data!.length > 0
+                          ? Center(
+                              child: ListView.builder(
+                                padding: const EdgeInsets.all(8),
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      decoration: new BoxDecoration(
+                                        borderRadius:
+                                            new BorderRadius.circular(16.0),
+                                        color: Color.fromARGB(60, 0, 0, 0),
+                                      ),
+                                      child: ListTile(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25)),
+                                        leading: CircleAvatar(
+                                          child: Tooltip(
+                                            message: "Executar",
+                                            child: IconButton(
+                                              icon: Icon(
+                                                  Icons.play_arrow_outlined),
+                                              onPressed: () {
                                                 Corrente.canalCorrente =
                                                     snapshot.data![index]
                                                         as Canal;
                                                 Navigator.pushNamed(
                                                     context, EXIBIRCANALPAGE);
                                               },
-                                              child: Text(
-                                                '${snapshot.data?[index].nome}',
-                                                overflow: TextOverflow.fade,
-                                                style: GoogleFonts.oswald(
-                                                  color: Colors.white,
-                                                  fontSize: 18,
-                                                ),
+                                            ),
+                                          ),
+                                        ),
+
+                                        title: Container(
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Corrente.canalCorrente = snapshot
+                                                  .data![index] as Canal;
+                                              Navigator.pushNamed(
+                                                  context, EXIBIRCANALPAGE);
+                                            },
+                                            child: Text(
+                                              '${snapshot.data?[index].nome}',
+                                              overflow: TextOverflow.fade,
+                                              style: GoogleFonts.oswald(
+                                                color: Colors.white,
+                                                fontSize: 18,
                                               ),
                                             ),
                                           ),
-                                          // subtitle: Text(
-                                          //     'Cat ID: ${snapshot.data?[index].idcategoria}'),
                                         ),
+                                        // subtitle: Text(
+                                        //     'Cat ID: ${snapshot.data?[index].idcategoria}'),
                                       ),
-                                    )
-                                  : Container();
-                            },
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return snapshot.data![index].nome
-                                      .toLowerCase()
-                                      .contains(searchString)
-                                  ? Divider(
-                                      height: 0,
-                                    )
-                                  : Container();
-                            },
+                                    ),
+                                  );
+                                },
+                                // separatorBuilder:
+                                //     (BuildContext context, int index) {
+                                //   return Container();
+                                // },
+                              ),
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 50, left: 4, right: 4),
+                              child: Align(
+                                child: Text("Nenhum Canal encontrado para:$searchString",
+                                    style: GoogleFonts.oswald(
+                                      color: AZUL_ALTERNATIVO,
+                                      fontSize: 23,
+                                    )),
+                              ),
+                            );
+                    } else if (snapshot.hasError) {
+                      return Center(child: Text('Erro ao Carregar Lista!'));
+                    } else
+                      return Container(
+                        height: MediaQuery.of(context).size.height - 200,
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.only(top: 50, left: 4, right: 4),
+                          child: Center(
+                            child: CircularProgressIndicator(),
                           ),
-                        );
-                      } else if (snapshot.hasError) {
-                        return Center(child: Text('Erro ao Carregar Lista!'));
-                      } else
-                        return Container(
-                          height: MediaQuery.of(context).size.height - 200,
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                top: 50, left: 4, right: 4),
-                            child: Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          ),
-                        );
-                    },
-                  )
-                : Padding(
-                    padding: const EdgeInsets.only(top: 50, left: 4, right: 4),
-                    child: Align(
-                      child: Text("Nenhuma lista Carregada!",
-                          style: GoogleFonts.oswald(
-                            color: AZUL_ALTERNATIVO,
-                            fontSize: 23,
-                          )),
-                    ),
-                  )),
+                        ),
+                      );
+                  },
+                )
+              : Padding(
+                  padding: const EdgeInsets.only(top: 50, left: 4, right: 4),
+                  child: Align(
+                    child: Text("Nenhuma lista Carregada!",
+                        style: GoogleFonts.oswald(
+                          color: AZUL_ALTERNATIVO,
+                          fontSize: 23,
+                        )),
+                  ),
+                ),
+        ),
       ],
     );
   }

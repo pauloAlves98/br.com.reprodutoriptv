@@ -44,5 +44,10 @@ class TabelaCanal {
     String auxid = idList.toString();
     return "SELECT * FROM $NOME_TABELA where $COL_LISTA='$auxid'";
   }
+   static String getCanaisPorParametro(int idList, String param) {
+    String auxid = idList.toString();
+    param = param.toLowerCase();
+    return "SELECT * FROM $NOME_TABELA where $COL_LISTA='$auxid' and lower($COL_NOME) LIKE '%$param%'";
+  }
 
 }

@@ -146,20 +146,16 @@ class _CanaisPageState extends State<CanaisPage> {
 
   ///Constrói os canais abaixo do nome da categoria! Estilo AmazonPrime!
   Future<Widget> builderAllCanais(context, Categoria categoria) async {
-    List<Widget> filhos = [];
 
     List<Canal>? canais = await canalDTO?.getAllCategoria(categoria.id);
-    print("Canais:");
+    print("Quantidade de Canais a carregar:");
     print(canais?.length.toString());
-    for (Canal can in canais!) {
-      //print(can.nome);
-      filhos.add(builderCardCanal(context, can));
-    }
-
-    return ListView(
-      scrollDirection: Axis.horizontal,
-      children: filhos,
-    );
+    return ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: canais!.length,
+        itemBuilder: (BuildContext context, int index) {
+          return builderCardCanal(context, canais[index]);
+        });
   }
 
   /// Método auxiliar de builderAllCanais! Executa a construção individual do componente de canal!
@@ -171,6 +167,7 @@ class _CanaisPageState extends State<CanaisPage> {
       child: GestureDetector(
         onTap: () {
           Corrente.canalCorrente = canal;
+          
           Navigator.pushNamed(context, EXIBIRCANALPAGE);
           //dispose();
         },
