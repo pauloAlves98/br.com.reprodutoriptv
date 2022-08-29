@@ -16,6 +16,7 @@ class PesquisaPage extends StatefulWidget {
 class _PesquisaPageState extends State<PesquisaPage> {
   String searchString = "";
   CanalDTO? canalDTO = CanalDTO.instance;
+  TextEditingController searchControl = TextEditingController();
   late Future<List<Canal>> shows;
   @override
   void initState() {
@@ -37,21 +38,29 @@ class _PesquisaPageState extends State<PesquisaPage> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: TextField(
+            controller: searchControl,
             style: TextStyle(color: Colors.white),
-            onChanged: (value) {
+            onChanged: (value) {},
+            decoration: InputDecoration(
+                labelStyle: TextStyle(color: AZUL_ALTERNATIVO),
+                iconColor: Colors.white,
+                labelText: 'Pesquisar',
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    Icons.search,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      searchString = searchControl.text.toLowerCase();
+                    });
+                  },
+                )),
+            onSubmitted: (value) {
               setState(() {
-                searchString = value.toLowerCase();
+                searchString = value;
               });
             },
-            decoration: InputDecoration(
-              labelStyle: TextStyle(color: AZUL_ALTERNATIVO),
-              iconColor: Colors.white,
-              labelText: 'Pesquisar',
-              suffixIcon: Icon(
-                Icons.search,
-                color: Colors.white,
-              ),
-            ),
           ),
         ),
         SizedBox(height: 2),
@@ -66,6 +75,7 @@ class _PesquisaPageState extends State<PesquisaPage> {
                             padding: const EdgeInsets.all(8),
                             itemCount: snapshot.data!.length,
                             itemBuilder: (BuildContext context, int index) {
+                              
                               return snapshot.data![index].nome
                                       .toLowerCase()
                                       .contains(searchString)
@@ -129,7 +139,9 @@ class _PesquisaPageState extends State<PesquisaPage> {
                               return snapshot.data![index].nome
                                       .toLowerCase()
                                       .contains(searchString)
-                                  ? Divider(height: 0,)
+                                  ? Divider(
+                                      height: 0,
+                                    )
                                   : Container();
                             },
                           ),

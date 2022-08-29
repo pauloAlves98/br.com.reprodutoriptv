@@ -10,6 +10,6 @@ class Corrente{
   static List<Lista> listasCorrente;
   static List<Categoria> categoriasCorrente;
   static Lista listaCorrente = null;
-
+  static List<Canal> canais = [];
   //criar getters e setters
 }
